@@ -8,19 +8,115 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-gowun-batang), "Gowun Batang", serif;
+  --font-display: var(--font-gowun-batang), "Gowun Batang", serif;
+  
+  /* 브랜드 노란색 컬러 팔레트 */
+  --color-brand-50: #fffbf2;
+  --color-brand-100: #fff6e4;
+  --color-brand-200: #ffe8b8;
+  --color-brand-300: #ffd98b;
+  --color-brand-400: #ffca5f;
+  --color-brand-500: #ffbb33;
+  --color-brand-600: #e6a52e;
+  --color-brand-700: #b37c21;
+  --color-brand-800: #805417;
+  --color-brand-900: #4d2b0b;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-gowun-batang), "Gowun Batang", serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gowun-batang-regular {
+  font-family: "Gowun Batang", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* MZ 스타일 애니메이션 */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* 브랜드 카피라이트 글로우 애니메이션 */
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(255, 187, 51, 0.5)) drop-shadow(0 0 10px rgba(255, 187, 51, 0.3)) drop-shadow(0 0 15px rgba(255, 187, 51, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(255, 187, 51, 0.8)) drop-shadow(0 0 20px rgba(255, 187, 51, 0.6)) drop-shadow(0 0 30px rgba(255, 187, 51, 0.4)) drop-shadow(0 0 40px rgba(230, 126, 34, 0.3));
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* 반짝거리는 글로우 효과 */
+@keyframes shimmer-glow {
+  0%, 100% {
+    text-shadow: 
+      0 0 3px rgba(230, 165, 46, 0.3),
+      0 0 6px rgba(230, 165, 46, 0.2);
+  }
+  50% {
+    text-shadow: 
+      0 0 6px rgba(230, 165, 46, 0.5),
+      0 0 12px rgba(230, 165, 46, 0.3),
+      0 0 18px rgba(255, 187, 51, 0.2);
+  }
+}
+
+.animate-shimmer-glow {
+  animation: shimmer-glow 3s ease-in-out infinite;
+}
+
+/* 숫자 증가 시 크기 변화 애니메이션 */
+@keyframes scale-bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-scale-bounce {
+  animation: scale-bounce 2s ease-in-out;
 }
