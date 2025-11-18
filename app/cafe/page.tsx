@@ -14,7 +14,7 @@ export default function CafePage() {
             투자자들의 아지트
           </h1>
           <p className="text-lg text-gray-700">
-            zarf-company 카페에서 만나는 투자 커뮤니티
+            카페탱에서 만나는 투자 커뮤니티
           </p>
         </section>
 

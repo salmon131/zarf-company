@@ -242,26 +242,26 @@ export default function VideoListClient({
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {filteredVideos.map((video) => (
-                <VideoCard
-                  key={video.slug}
-                  title={video.title}
-                  thumbnailUrl={video.thumbnailUrl}
-                  views={video.views}
-                  duration={video.duration}
-                  href={video.href}
-                  category={video.category}
-                />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {filteredVideos.map((video) => (
+              <VideoCard
+                key={video.slug}
+                title={video.title}
+                thumbnailUrl={video.thumbnailUrl}
+                views={video.views}
+                duration={video.duration}
+                href={video.href}
+                category={video.category}
+              />
+            ))}
+          </div>
           )}
         </section>
 
         {/* Top 10 Section - 재생목록일 때는 숨김 */}
         {selectedCategory !== "재생목록" && (
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">인기 영상 TOP 10</h2>
+        <section>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">인기 영상 TOP 10</h2>
           <div className="space-y-4">
             {videos
               .sort((a, b) => b.views - a.views)
