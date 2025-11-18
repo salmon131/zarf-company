@@ -216,7 +216,7 @@ export default function ComicEpisodePage({
 
       {/* 만화 이미지 */}
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           <Card className="overflow-hidden">
             <div className="relative w-full">
               {/* 에피소드 타입 배지 */}
