@@ -9,6 +9,9 @@ export interface YouTubeVideoInfo {
   publishedAt: string;
   channelTitle: string;
   duration?: string;
+  durationSeconds?: number; // 초 단위 duration
+  isShort?: boolean; // Shorts 여부
+  categoryId?: string; // YouTube 카테고리 ID
 }
 
 /**
@@ -71,6 +74,18 @@ export async function getYouTubeVideoInfo(
     const contentDetails = item.contentDetails;
 
     // ISO 8601 duration을 초로 변환하는 함수
+    const parseDurationToSeconds = (duration: string): number => {
+      const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+      if (!match) return 0;
+
+      const hours = parseInt(match[1] || "0", 10);
+      const minutes = parseInt(match[2] || "0", 10);
+      const seconds = parseInt(match[3] || "0", 10);
+
+      return hours * 3600 + minutes * 60 + seconds;
+    };
+
+    // ISO 8601 duration을 문자열로 변환하는 함수
     const parseDuration = (duration: string): string => {
       const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
       if (!match) return "";
@@ -85,6 +100,13 @@ export async function getYouTubeVideoInfo(
       return `${minutes}:${seconds.toString().padStart(2, "0")}`;
     };
 
+    const durationSeconds = contentDetails?.duration 
+      ? parseDurationToSeconds(contentDetails.duration) 
+      : undefined;
+    
+    // Shorts 판별: 60초 이하인 경우 Shorts로 간주
+    const isShort = durationSeconds !== undefined && durationSeconds <= 60;
+
     return {
       id: videoId,
       title: snippet.title,
@@ -94,6 +116,9 @@ export async function getYouTubeVideoInfo(
       publishedAt: snippet.publishedAt,
       channelTitle: snippet.channelTitle,
       duration: contentDetails?.duration ? parseDuration(contentDetails.duration) : undefined,
+      durationSeconds,
+      isShort,
+      categoryId: snippet.categoryId,
     };
   } catch (error) {
     console.error("YouTube API 호출 오류:", error);
@@ -158,6 +183,19 @@ export async function getMultipleYouTubeVideos(
       return [];
     }
 
+    // ISO 8601 duration을 초로 변환하는 함수
+    const parseDurationToSeconds = (duration: string): number => {
+      const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+      if (!match) return 0;
+
+      const hours = parseInt(match[1] || "0", 10);
+      const minutes = parseInt(match[2] || "0", 10);
+      const seconds = parseInt(match[3] || "0", 10);
+
+      return hours * 3600 + minutes * 60 + seconds;
+    };
+
+    // ISO 8601 duration을 문자열로 변환하는 함수
     const parseDuration = (duration: string): string => {
       const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
       if (!match) return "";
@@ -177,6 +215,13 @@ export async function getMultipleYouTubeVideos(
       const statistics = item.statistics;
       const contentDetails = item.contentDetails;
 
+      const durationSeconds = contentDetails?.duration 
+        ? parseDurationToSeconds(contentDetails.duration) 
+        : undefined;
+      
+      // Shorts 판별: 60초 이하인 경우 Shorts로 간주
+      const isShort = durationSeconds !== undefined && durationSeconds <= 60;
+
       return {
         id: item.id,
         title: snippet.title,
@@ -186,6 +231,9 @@ export async function getMultipleYouTubeVideos(
         publishedAt: snippet.publishedAt,
         channelTitle: snippet.channelTitle,
         duration: contentDetails?.duration ? parseDuration(contentDetails.duration) : undefined,
+        durationSeconds,
+        isShort,
+        categoryId: snippet.categoryId,
       };
     });
   } catch (error) {
@@ -340,6 +388,194 @@ export async function getChannelVideos(
     return await getMultipleYouTubeVideos(videoIds);
   } catch (error) {
     console.error("채널 영상 가져오기 오류:", error);
+    return [];
+  }
+}
+
+/**
+ * 채널의 재생목록 목록을 가져옵니다
+ */
+export interface PlaylistInfo {
+  id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  itemCount: number;
+  publishedAt: string;
+}
+
+export async function getChannelPlaylists(
+  channelHandle: string,
+  maxResults: number = 50
+): Promise<PlaylistInfo[]> {
+  const apiKey = process.env.YOUTUBE_API_KEY;
+
+  if (!apiKey) {
+    console.warn("YOUTUBE_API_KEY가 설정되지 않았습니다.");
+    return [];
+  }
+
+  try {
+    // 채널 정보 가져오기
+    const channelInfo = await getChannelByHandle(channelHandle);
+
+    if (!channelInfo) {
+      return [];
+    }
+
+    const { channelId } = channelInfo;
+
+    // 채널의 재생목록 목록 가져오기
+    const playlistsUrl = new URL("https://www.googleapis.com/youtube/v3/playlists");
+    playlistsUrl.searchParams.set("part", "snippet,contentDetails");
+    playlistsUrl.searchParams.set("channelId", channelId);
+    playlistsUrl.searchParams.set("maxResults", Math.min(maxResults, 50).toString());
+    playlistsUrl.searchParams.set("key", apiKey);
+
+    const playlistsResponse = await fetch(playlistsUrl.toString(), {
+      next: { revalidate: 3600 }, // 1시간 캐시
+    });
+
+    if (!playlistsResponse.ok) {
+      const errorData = await playlistsResponse.json().catch(() => ({}));
+      console.error(`재생목록 가져오기 오류: ${playlistsResponse.status}`, {
+        error: errorData.error || errorData,
+      });
+      return [];
+    }
+
+    const playlistsData = await playlistsResponse.json();
+
+    if (!playlistsData.items || playlistsData.items.length === 0) {
+      return [];
+    }
+
+    return playlistsData.items.map((item: any) => {
+      const snippet = item.snippet;
+      const contentDetails = item.contentDetails;
+
+      return {
+        id: item.id,
+        title: snippet.title,
+        description: snippet.description,
+        thumbnailUrl: snippet.thumbnails?.high?.url || snippet.thumbnails?.default?.url || "",
+        itemCount: parseInt(contentDetails?.itemCount || "0", 10),
+        publishedAt: snippet.publishedAt,
+      };
+    });
+  } catch (error) {
+    console.error("재생목록 가져오기 오류:", error);
+    return [];
+  }
+}
+
+/**
+ * 재생목록 정보를 가져옵니다
+ */
+export async function getPlaylistInfo(
+  playlistId: string
+): Promise<PlaylistInfo | null> {
+  const apiKey = process.env.YOUTUBE_API_KEY;
+
+  if (!apiKey) {
+    console.warn("YOUTUBE_API_KEY가 설정되지 않았습니다.");
+    return null;
+  }
+
+  try {
+    const playlistUrl = new URL("https://www.googleapis.com/youtube/v3/playlists");
+    playlistUrl.searchParams.set("part", "snippet,contentDetails");
+    playlistUrl.searchParams.set("id", playlistId);
+    playlistUrl.searchParams.set("key", apiKey);
+
+    const playlistResponse = await fetch(playlistUrl.toString(), {
+      next: { revalidate: 3600 }, // 1시간 캐시
+    });
+
+    if (!playlistResponse.ok) {
+      const errorData = await playlistResponse.json().catch(() => ({}));
+      console.error(`재생목록 정보 가져오기 오류: ${playlistResponse.status}`, {
+        error: errorData.error || errorData,
+      });
+      return null;
+    }
+
+    const playlistData = await playlistResponse.json();
+
+    if (!playlistData.items || playlistData.items.length === 0) {
+      return null;
+    }
+
+    const item = playlistData.items[0];
+    const snippet = item.snippet;
+    const contentDetails = item.contentDetails;
+
+    return {
+      id: item.id,
+      title: snippet.title,
+      description: snippet.description,
+      thumbnailUrl: snippet.thumbnails?.high?.url || snippet.thumbnails?.default?.url || "",
+      itemCount: parseInt(contentDetails?.itemCount || "0", 10),
+      publishedAt: snippet.publishedAt,
+    };
+  } catch (error) {
+    console.error("재생목록 정보 가져오기 오류:", error);
+    return null;
+  }
+}
+
+/**
+ * 특정 재생목록의 영상 목록을 가져옵니다
+ */
+export async function getPlaylistVideos(
+  playlistId: string,
+  maxResults: number = 50
+): Promise<YouTubeVideoInfo[]> {
+  const apiKey = process.env.YOUTUBE_API_KEY;
+
+  if (!apiKey) {
+    console.warn("YOUTUBE_API_KEY가 설정되지 않았습니다.");
+    return [];
+  }
+
+  try {
+    const playlistUrl = new URL("https://www.googleapis.com/youtube/v3/playlistItems");
+    playlistUrl.searchParams.set("part", "snippet,contentDetails");
+    playlistUrl.searchParams.set("playlistId", playlistId);
+    playlistUrl.searchParams.set("maxResults", Math.min(maxResults, 50).toString());
+    playlistUrl.searchParams.set("key", apiKey);
+
+    const playlistResponse = await fetch(playlistUrl.toString(), {
+      next: { revalidate: 600 }, // 10분 캐시
+    });
+
+    if (!playlistResponse.ok) {
+      const errorData = await playlistResponse.json().catch(() => ({}));
+      console.error(`재생목록 영상 가져오기 오류: ${playlistResponse.status}`, {
+        error: errorData.error || errorData,
+      });
+      return [];
+    }
+
+    const playlistData = await playlistResponse.json();
+
+    if (!playlistData.items || playlistData.items.length === 0) {
+      return [];
+    }
+
+    // 영상 ID 추출
+    const videoIds = playlistData.items
+      .map((item: any) => item.contentDetails?.videoId)
+      .filter(Boolean);
+
+    if (videoIds.length === 0) {
+      return [];
+    }
+
+    // 영상 상세 정보 가져오기
+    return await getMultipleYouTubeVideos(videoIds);
+  } catch (error) {
+    console.error("재생목록 영상 가져오기 오류:", error);
     return [];
   }
 }

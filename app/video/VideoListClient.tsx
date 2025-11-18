@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import VideoCard from "@/components/video/VideoCard";
 import Card from "@/components/ui/Card";
 
@@ -14,18 +15,34 @@ interface Video {
   views: number;
   duration: string;
   description?: string;
+  publishedAt?: string;
+  isShort?: boolean;
+}
+
+interface Playlist {
+  id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  itemCount: number;
+  publishedAt: string;
 }
 
 interface VideoListClientProps {
   categories: string[];
   videos: Video[];
+  playlists?: Playlist[];
 }
+
+type SortOption = "latest" | "popular" | "date";
 
 export default function VideoListClient({
   categories,
   videos,
+  playlists = [],
 }: VideoListClientProps) {
-  const [selectedCategory, setSelectedCategory] = useState("전체");
+  const [selectedCategory, setSelectedCategory] = useState("동영상");
+  const [sortOption, setSortOption] = useState<SortOption>("popular");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const router = useRouter();
 
@@ -35,10 +52,44 @@ export default function VideoListClient({
     setTimeout(() => setIsRefreshing(false), 1000);
   };
 
-  const filteredVideos =
-    selectedCategory === "전체"
-      ? videos
-      : videos.filter((video) => video.category === selectedCategory);
+  // 카테고리 필터링
+  const filteredVideos = useMemo(() => {
+    if (selectedCategory === "재생목록") {
+      return []; // 재생목록은 별도로 표시
+    }
+    
+    let result = videos.filter((video) => video.category === selectedCategory);
+
+    // 정렬 적용
+    switch (sortOption) {
+      case "popular":
+        // 조회수 높은 순
+        result.sort((a, b) => b.views - a.views);
+        break;
+      case "latest":
+        // 발행일 최신순 (발행일이 없으면 조회수 높은 순)
+        result.sort((a, b) => {
+          if (a.publishedAt && b.publishedAt) {
+            return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+          }
+          return b.views - a.views;
+        });
+        break;
+      case "date":
+        // 발행일 오래된 순 (발행일이 없으면 조회수 낮은 순)
+        result.sort((a, b) => {
+          if (a.publishedAt && b.publishedAt) {
+            return new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime();
+          }
+          return a.views - b.views;
+        });
+        break;
+      default:
+        break;
+    }
+
+    return result;
+  }, [videos, selectedCategory, sortOption]);
 
   return (
     <div className="min-h-screen bg-white py-12">
@@ -82,7 +133,7 @@ export default function VideoListClient({
 
         {/* Category Tabs */}
         <section className="mb-8">
-          <div className="flex flex-wrap gap-2 justify-center">
+          <div className="flex flex-wrap gap-2 justify-center mb-6">
             {categories.map((category) => (
               <button
                 key={category}
@@ -97,28 +148,120 @@ export default function VideoListClient({
               </button>
             ))}
           </div>
+
+          {/* Sort Options - 재생목록일 때는 숨김 */}
+          {selectedCategory !== "재생목록" && (
+            <div className="flex gap-2 justify-center">
+            <button
+              onClick={() => setSortOption("latest")}
+              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                sortOption === "latest"
+                  ? "bg-black text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              최신순
+            </button>
+            <button
+              onClick={() => setSortOption("popular")}
+              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                sortOption === "popular"
+                  ? "bg-black text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              인기순
+            </button>
+            <button
+              onClick={() => setSortOption("date")}
+              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                sortOption === "date"
+                  ? "bg-black text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              날짜순
+            </button>
+            </div>
+          )}
         </section>
 
-        {/* Video Grid */}
+        {/* Video Grid or Playlist Grid */}
         <section className="mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {filteredVideos.map((video) => (
-              <VideoCard
-                key={video.slug}
-                title={video.title}
-                thumbnailUrl={video.thumbnailUrl}
-                views={video.views}
-                duration={video.duration}
-                href={video.href}
-                category={video.category}
-              />
-            ))}
-          </div>
+          {selectedCategory === "재생목록" ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {playlists.map((playlist) => (
+                <Link
+                  key={playlist.id}
+                  href={`/video/playlist/${playlist.id}`}
+                  className="block group"
+                >
+                  <Card hover className="h-full overflow-hidden border-0 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl shadow-md">
+                    <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-4 relative overflow-hidden">
+                      {playlist.thumbnailUrl ? (
+                        <img
+                          src={playlist.thumbnailUrl}
+                          alt={playlist.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                          <svg
+                            className="w-16 h-16"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                          </svg>
+                        </div>
+                      )}
+                      <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-md font-semibold flex items-center gap-1">
+                        <svg
+                          className="w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                        </svg>
+                        동영상 {playlist.itemCount}개
+                      </div>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-brand-600 transition-colors">
+                      {playlist.title}
+                    </h3>
+                    {playlist.description && (
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                        {playlist.description}
+                      </p>
+                    )}
+                    <p className="text-xs text-gray-500">
+                      {new Date(playlist.publishedAt).toLocaleDateString("ko-KR")} 생성
+                    </p>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {filteredVideos.map((video) => (
+                <VideoCard
+                  key={video.slug}
+                  title={video.title}
+                  thumbnailUrl={video.thumbnailUrl}
+                  views={video.views}
+                  duration={video.duration}
+                  href={video.href}
+                  category={video.category}
+                />
+              ))}
+            </div>
+          )}
         </section>
 
-        {/* Top 10 Section */}
-        <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">인기 영상 TOP 10</h2>
+        {/* Top 10 Section - 재생목록일 때는 숨김 */}
+        {selectedCategory !== "재생목록" && (
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">인기 영상 TOP 10</h2>
           <div className="space-y-4">
             {videos
               .sort((a, b) => b.views - a.views)
@@ -144,6 +287,7 @@ export default function VideoListClient({
               ))}
           </div>
         </section>
+        )}
       </div>
     </div>
   );

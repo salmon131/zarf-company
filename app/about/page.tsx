@@ -10,26 +10,50 @@ export default function AboutPage() {
             브랜드 스토리
           </h1>
           <p className="text-lg text-gray-700">
-            만화로 투자 감각을 깨우는 zarf-company
+            만화로 투자 감각을 깨우는 자프 컴퍼니
           </p>
         </section>
 
         {/* Philosophy */}
         <section className="mb-16">
           <Card className="p-8 bg-brand-50">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              만화로 투자 감각을 깨우다
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              만화를 통한 우리들의 주식 이야기
             </h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              zarf-company는 복잡하고 어려운 투자 지식을 만화와 영상으로
-              쉽고 재미있게 전달합니다. 투자에 관심은 있지만 어디서부터
-              시작해야 할지 모르는 분들을 위해, 단계별로 구성된 콘텐츠와
-              오프라인 커뮤니티를 제공합니다.
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              우리의 목표는 모든 사람이 투자에 대한 자신감을 갖고, 올바른
-              투자 습관을 기를 수 있도록 돕는 것입니다.
-            </p>
+            <div className="space-y-6">
+              <div>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  자프 컴퍼니는 회원 50명으로 구성된 투자 커뮤니티에서 시작되었습니다. 
+                  함께 주식투자를 공부하고 실전 투자를 경험하며, 투자 여정을 함께 걸어왔습니다.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  이 경험을 바탕으로, 복잡하고 어려운 투자 지식을 만화와 영상으로 
+                  재미있게 전달하는 콘텐츠를 제작하게 되었습니다.
+                </p>
+              </div>
+              
+              <div className="border-t border-brand-200 pt-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  솔직하고 공감하는 주식 투자를 만화로 풀어내다
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  우리는 투자자의 실제 경험과 감정을 솔직하게 담아 만화로 스토리를 전개합니다. 
+                  성공뿐만 아니라 실패와 시행착오도 함께 그려내어, 투자자들이 공감하고 
+                  배울 수 있는 콘텐츠를 만들어갑니다.
+                </p>
+              </div>
+
+              <div className="border-t border-brand-200 pt-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  우리의 목표
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  모든 사람이 투자에 대한 자신감을 갖고, 올바른 
+                  투자 습관을 기를 수 있도록 돕는 것입니다. 만화와 스토리텔링을 통해 
+                  투자가 더 이상 어렵고 멀게 느껴지지 않도록, 함께 성장하는 투자 커뮤니티를 만들어갑니다.
+                </p>
+              </div>
+            </div>
           </Card>
         </section>
 
@@ -38,22 +62,56 @@ export default function AboutPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">대표 소개</h2>
           <Card className="p-6">
             <div className="flex flex-col md:flex-row gap-6">
-              <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto md:mx-0">
-                <span className="text-4xl">👤</span>
+              <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto md:mx-0 overflow-hidden flex-shrink-0">
+                <img 
+                  src="/images/ceo-profile.jpg" 
+                  alt="김종환 대표" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  대표 이름
+                  김종환
                 </h3>
-                <p className="text-gray-600 mb-4">
-                  투자 교육 전문가로서 10년 이상의 경험을 바탕으로, 복잡한
-                  투자 지식을 누구나 이해할 수 있도록 만화와 영상으로
-                  전달하는 일을 하고 있습니다.
+                <p className="text-gray-600 mb-4 font-medium">
+                  부동산 자산투자 및 개발 전문가 · 투자콘텐츠 크리에이터 · (주)자프컴퍼니 대표
                 </p>
-                <div className="text-sm text-gray-500">
-                  <p>• 투자 교육 전문가</p>
-                  <p>• 금융권 경력 10년+</p>
-                  <p>• 투자 콘텐츠 크리에이터</p>
+                
+                <div className="space-y-4 text-sm">
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2">커리어 & 경력</h4>
+                    <ul className="text-gray-700 space-y-1">
+                      <li>• 교보생명, LG그룹, KT&G 등 국내 대기업에서 25년간 자산개발(Real Estate Development) 및 투자 관련 업무 수행</li>
+                      <li>• 풍부한 현장경험을 바탕으로 부동산·금융의 복합적 시각을 갖춘 전문가</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2">학력</h4>
+                    <ul className="text-gray-700 space-y-1">
+                      <li>• 건국대학교 부동산학과 학사</li>
+                      <li>• 건국대학교 금융·투자 석사 (M.S.)</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2">기업 활동</h4>
+                    <ul className="text-gray-700 space-y-1">
+                      <li>• 2025년 (주)자프컴퍼니 설립</li>
+                      <li>• 주식경제만화 '탱자프' 시리즈 제작(유튜브 '25.10월)</li>
+                      <li>• 투자교육 기반의 크리에이티브 콘텐츠 기업 운영</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-2">투자 성과</h4>
+                    <ul className="text-gray-700 space-y-1">
+                      <li>• 퇴직연금 계좌 2년 수익률: +50%</li>
+                      <li>• 개인 주식투자 5년 평균 연복리 수익률: 약 +45% (총 228% 성과)</li>
+                      <li>• 투자방식: 퀀트&모멘텀</li>
+                      <li>• 정량·정성 분석 기반의 '포워드 EPS + RSI 중심 투자철학' 구축</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -93,8 +151,18 @@ export default function AboutPage() {
                  암사역사공원역 2번 출구에서 도보 5분 거리
                 </p>
               </div>
-              <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-                <span className="text-gray-400">지도 영역</span>
+              {/* 네이버 지도 임베드 */}
+              <div className="mt-6 rounded-lg overflow-hidden shadow-md">
+                <iframe
+                  src="https://naver.me/FhfREQzF"
+                  width="100%"
+                  height="600"
+                  frameBorder="0"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  className="w-full"
+                  title="네이버 지도"
+                ></iframe>
               </div>
             </div>
           </Card>

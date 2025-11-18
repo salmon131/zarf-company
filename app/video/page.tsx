@@ -1,14 +1,11 @@
 import { videoConfigs, CHANNEL_HANDLE } from "@/lib/video-data";
-import { getMultipleYouTubeVideos, getChannelVideos } from "@/lib/youtube-api";
+import { getMultipleYouTubeVideos, getChannelVideos, getChannelPlaylists } from "@/lib/youtube-api";
 import VideoListClient from "./VideoListClient";
 
 const categories = [
-  "전체",
-  "숏츠",
-  "투자 입문",
-  "투자 심리",
-  "ETF",
-  "캐릭터 시리즈",
+  "동영상",
+  "Shorts",
+  "재생목록",
 ];
 
 export default async function VideoPage() {
@@ -22,6 +19,8 @@ export default async function VideoPage() {
     duration: string;
     description: string;
     youtubeId: string;
+    publishedAt?: string;
+    isShort?: boolean;
   }> = [];
 
   // 1. 채널에서 모든 영상 가져오기 (자동)
@@ -33,13 +32,15 @@ export default async function VideoPage() {
       const channelVideosWithSlug = channelVideos.map((video) => ({
         slug: video.id, // 영상 ID를 slug로 사용
         href: `/video/${video.id}`, // 동적 라우팅
-        category: "전체", // 기본 카테고리
+        category: video.isShort ? "Shorts" : "동영상", // Shorts 여부에 따라 카테고리 설정
         title: video.title,
         thumbnailUrl: video.thumbnailUrl,
         views: video.viewCount,
         duration: video.duration || "",
         description: video.description,
         youtubeId: video.id,
+        publishedAt: video.publishedAt,
+        isShort: video.isShort,
       }));
 
       allVideos = [...channelVideosWithSlug];
@@ -59,13 +60,15 @@ export default async function VideoPage() {
       return {
         slug: config.slug,
         href: `/video/${config.slug}`,
-        category: config.category,
+        category: youtubeData?.isShort ? "Shorts" : "동영상", // Shorts 여부에 따라 카테고리 설정
         title: youtubeData?.title || config.slug,
         thumbnailUrl: youtubeData?.thumbnailUrl || `https://img.youtube.com/vi/${config.youtubeId}/hqdefault.jpg`,
         views: youtubeData?.viewCount || 0,
         duration: youtubeData?.duration || "",
         description: youtubeData?.description || "",
         youtubeId: config.youtubeId,
+        publishedAt: youtubeData?.publishedAt,
+        isShort: youtubeData?.isShort,
       };
     });
 
@@ -81,5 +84,23 @@ export default async function VideoPage() {
     return b.views - a.views;
   });
 
-  return <VideoListClient categories={categories} videos={allVideos} />;
+  // 재생목록 정보 가져오기
+  let playlists: Array<{
+    id: string;
+    title: string;
+    description: string;
+    thumbnailUrl: string;
+    itemCount: number;
+    publishedAt: string;
+  }> = [];
+
+  if (CHANNEL_HANDLE) {
+    try {
+      playlists = await getChannelPlaylists(CHANNEL_HANDLE, 50);
+    } catch (error) {
+      console.error("재생목록 가져오기 실패:", error);
+    }
+  }
+
+  return <VideoListClient categories={categories} videos={allVideos} playlists={playlists} />;
 }
