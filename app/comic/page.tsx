@@ -23,6 +23,13 @@ export default function ComicPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">시리즈</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <ComicCard
+              title="이상한 녀석들의 주식투자 - 탱자프"
+              description="만화로 쉽고 재미있게 배우는 주식 투자 이야기"
+              href="/comic/tangzarf"
+              tags={["실전", "만화"]}
+              imageUrl="/images/comic/tangzarf/cover.jpg"
+            />
+            <ComicCard
               title="주식 투자 첫걸음"
               description="처음 시작하는 주식 투자자를 위한 기초 만화"
               href="/comic/stock-basics"
