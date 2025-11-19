@@ -3,17 +3,29 @@ import Button from "@/components/ui/Button";
 
 export default function B2BPage() {
   return (
-    <div className="min-h-screen bg-white py-12">
-      <div className="container mx-auto px-4">
-        {/* Hero Section */}
-        <section className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-brand-500 mb-4">
-            타겟 투자자를 모으는 콘텐츠 미디어
-          </h1>
-          <p className="text-lg text-gray-700">
-            만화 + 영상 + 오프라인으로 만나는 투자자 커뮤니티
-          </p>
-        </section>
+    <div className="min-h-screen bg-white">
+      {/* 헤더 그라데이션 섹션 */}
+      <div className="bg-gradient-to-b from-brand-50 to-white py-12">
+        <div className="container mx-auto px-4">
+          {/* Hero Section */}
+          <section className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative">
+              <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                타겟 투자자를 모으는 콘텐츠 미디어
+              </span>
+              {/* 텍스트 외곽선 효과로 가독성 향상 */}
+              <span className="absolute inset-0 bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent blur-sm opacity-20 -z-10">
+                타겟 투자자를 모으는 콘텐츠 미디어
+              </span>
+            </h1>
+            <p className="text-lg text-gray-700">
+              만화 + 영상 + 오프라인으로 만나는 투자자 커뮤니티
+            </p>
+          </section>
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-12">
 
         {/* Target Profile */}
         <section className="mb-16">

@@ -9,6 +9,7 @@ interface ButtonProps {
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -19,13 +20,20 @@ export default function Button({
   className = "",
   onClick,
   type = "button",
+  disabled = false,
 }: ButtonProps) {
   const baseClasses = "rounded-lg font-medium transition-colors inline-flex items-center justify-center";
   
   const variantClasses = {
-    primary: "bg-brand-500 text-white hover:bg-brand-600",
-    secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300",
-    outline: "border border-brand-500 text-brand-500 hover:bg-brand-50",
+    primary: disabled 
+      ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
+      : "bg-brand-500 text-white hover:bg-brand-600",
+    secondary: disabled
+      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+      : "bg-gray-200 text-gray-900 hover:bg-gray-300",
+    outline: disabled
+      ? "border border-gray-300 text-gray-400 cursor-not-allowed"
+      : "border border-brand-500 text-brand-500 hover:bg-brand-50",
   };
   
   const sizeClasses = {
@@ -45,7 +53,7 @@ export default function Button({
   }
   
   return (
-    <button type={type} onClick={onClick} className={classes}>
+    <button type={type} onClick={onClick} className={classes} disabled={disabled}>
       {children}
     </button>
   );

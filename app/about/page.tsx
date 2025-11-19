@@ -2,17 +2,29 @@ import Card from "@/components/ui/Card";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        {/* Hero Section */}
-        <section className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-brand-500 mb-4">
-            브랜드 스토리
-          </h1>
-          <p className="text-lg text-gray-700">
-            만화로 투자 감각을 깨우는 자프 컴퍼니
-          </p>
-        </section>
+    <div className="min-h-screen bg-white">
+      {/* 헤더 그라데이션 섹션 */}
+      <div className="bg-gradient-to-b from-brand-50 to-white py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          {/* Hero Section */}
+          <section className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative">
+              <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                브랜드 스토리
+              </span>
+              {/* 텍스트 외곽선 효과로 가독성 향상 */}
+              <span className="absolute inset-0 bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent blur-sm opacity-20 -z-10">
+                브랜드 스토리
+              </span>
+            </h1>
+            <p className="text-lg text-gray-700">
+              만화로 투자 감각을 깨우는 자프 컴퍼니
+            </p>
+          </section>
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-12 max-w-4xl">
 
         {/* Philosophy */}
         <section className="mb-16">
