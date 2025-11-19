@@ -1,28 +1,76 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import CafeCard from "@/components/cafe/CafeCard";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
+import MeetingRoomCalendar from "@/components/cafe/MeetingRoomCalendar";
 
 export default function CafePage() {
+  const [showRentalInquiry, setShowRentalInquiry] = useState(false);
+  const [rentalFormData, setRentalFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    purpose: "",
+    date: "",
+    time: "",
+    message: "",
+  });
+
+  const handleRentalInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setRentalFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRentalSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`[카페탱 대관 문의] ${rentalFormData.name}님의 문의`);
+    const body = encodeURIComponent(
+      `이름: ${rentalFormData.name}\n이메일: ${rentalFormData.email}\n연락처: ${rentalFormData.phone}\n목적: ${rentalFormData.purpose}\n희망 날짜: ${rentalFormData.date}\n희망 시간: ${rentalFormData.time}\n\n문의 내용:\n${rentalFormData.message}`
+    );
+    window.location.href = `mailto:qk006@naver.com?subject=${subject}&body=${body}`;
+    
+    setTimeout(() => {
+      setShowRentalInquiry(false);
+      setRentalFormData({ name: "", email: "", phone: "", purpose: "", date: "", time: "", message: "" });
+    }, 500);
+  };
+
   return (
-    <div className="min-h-screen bg-white py-12">
-      <div className="container mx-auto px-4">
-        {/* Hero Section */}
-        <section className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-brand-500 mb-4">
-            투자자들의 아지트
-          </h1>
-          <p className="text-lg text-gray-700">
-            카페탱에서 만나는 투자 커뮤니티
-          </p>
-        </section>
+    <div className="min-h-screen bg-white">
+      {/* 헤더 그라데이션 섹션 */}
+      <div className="bg-gradient-to-b from-brand-50 to-white py-12">
+        <div className="container mx-auto px-4">
+          {/* Hero Section */}
+          <section className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative">
+              <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                무인 카공 & 만화 카페
+              </span>
+              {/* 텍스트 외곽선 효과로 가독성 향상 */}
+              <span className="absolute inset-0 bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent blur-sm opacity-20 -z-10">
+                카페탱
+              </span>
+            </h1>
+            <p className="text-lg text-gray-700">
+              편하게 쉬고, 작업하고, 공부할 수 있는 공간
+            </p>
+          </section>
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-12">
 
         {/* About Section */}
         <section className="mb-16">
           <CafeCard
             title="카페탱"
-            description="투자자들이 모여 함께 배우고 성장하는 공간입니다. 오프라인 세미나와 스터디를 통해 실전 투자 감각을 키워보세요."
+            description="탱자프 사무실 바깥 공간에 마련한 카페입니다. 편하게 쉬고, 작업하고, 공부할 수 있도록 만들어진 공간입니다. 적지 않은 종류의 만화책과 유익한 책들도 준비되어있습니다. 회의실은 무료이며 2시간 이내, 3인 이상(과외, 스터디 등) 모임에 한해 사용할 수 있습니다."
             address="서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱"
             hours="매일 09:00 - 01:00"
             phone="010-4026-7291"
@@ -59,18 +107,203 @@ export default function CafePage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="text-center">
-          <Card className="p-8 bg-brand-50">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              세미나 일정 확인하기
-            </h3>
-            <p className="text-gray-700 mb-6">
-              다양한 투자 주제의 세미나를 만나보세요
+        {/* Meeting Room Section */}
+        <section className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              회의실 사용 시간표
+            </h2>
+            <p className="text-gray-700 text-lg">
+              무료로 회의실을 예약하고 사용할 수 있어요
             </p>
-            <Button href="/cafe/seminar" variant="primary" size="lg">
-              세미나 일정 보기
-            </Button>
+          </div>
+          <MeetingRoomCalendar />
+        </section>
+
+        {/* Rental Inquiry Section */}
+        <section className="mb-16">
+          <Card className="p-8 bg-brand-50">
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                대관 문의
+              </h3>
+              <p className="text-gray-700 mb-6">
+                카페 공간을 대관하고 싶으시다면 문의해주세요
+              </p>
+              {!showRentalInquiry ? (
+                <Button
+                  onClick={() => setShowRentalInquiry(true)}
+                  variant="primary"
+                  size="lg"
+                >
+                  대관 문의하기
+                </Button>
+              ) : (
+                <form onSubmit={handleRentalSubmit} className="max-w-2xl mx-auto space-y-4">
+                  <div>
+                    <label htmlFor="rental-name" className="block text-sm font-medium text-gray-700 mb-2">
+                      이름 <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="rental-name"
+                      name="name"
+                      value={rentalFormData.name}
+                      onChange={handleRentalInputChange}
+                      required
+                      placeholder="이름을 입력해주세요"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="rental-email" className="block text-sm font-medium text-gray-700 mb-2">
+                      이메일 <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="rental-email"
+                      name="email"
+                      value={rentalFormData.email}
+                      onChange={handleRentalInputChange}
+                      required
+                      placeholder="이메일 주소를 입력해주세요"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="rental-phone" className="block text-sm font-medium text-gray-700 mb-2">
+                      연락처 <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="rental-phone"
+                      name="phone"
+                      value={rentalFormData.phone}
+                      onChange={handleRentalInputChange}
+                      required
+                      placeholder="연락 가능한 전화번호를 입력해주세요"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="rental-purpose" className="block text-sm font-medium text-gray-700 mb-2">
+                      대관 목적 <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id="rental-purpose"
+                      name="purpose"
+                      value={rentalFormData.purpose}
+                      onChange={handleRentalInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    >
+                      <option value="">선택해주세요</option>
+                      <option value="스터디">스터디</option>
+                      <option value="모임">모임</option>
+                      <option value="행사">행사</option>
+                      <option value="기타">기타</option>
+                    </select>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="rental-date" className="block text-sm font-medium text-gray-700 mb-2">
+                        희망 날짜 <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        id="rental-date"
+                        name="date"
+                        value={rentalFormData.date}
+                        onChange={handleRentalInputChange}
+                        required
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="rental-time" className="block text-sm font-medium text-gray-700 mb-2">
+                        희망 시간 <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="time"
+                        id="rental-time"
+                        name="time"
+                        value={rentalFormData.time}
+                        onChange={handleRentalInputChange}
+                        required
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="rental-message" className="block text-sm font-medium text-gray-700 mb-2">
+                      문의 내용
+                    </label>
+                    <textarea
+                      id="rental-message"
+                      name="message"
+                      value={rentalFormData.message}
+                      onChange={handleRentalInputChange}
+                      rows={4}
+                      placeholder="대관에 대한 자세한 내용을 남겨주세요"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
+                    />
+                  </div>
+                  
+                  <div className="flex gap-4 pt-4">
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        setShowRentalInquiry(false);
+                        setRentalFormData({ name: "", email: "", phone: "", purpose: "", date: "", time: "", message: "" });
+                      }}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      취소
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      className="flex-1"
+                    >
+                      문의하기
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </Card>
+        </section>
+
+        {/* 오시는 길 Section */}
+        <section className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              오시는 길
+            </h2>
+            <p className="text-gray-700 text-lg mb-6">
+              서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱
+            </p>
+          </div>
+          <Card className="p-0 overflow-hidden">
+            <div className="rounded-lg overflow-hidden shadow-md">
+              <iframe
+                src="https://naver.me/FhfREQzF"
+                width="100%"
+                height="500"
+                frameBorder="0"
+                style={{ border: 0 }}
+                allowFullScreen
+                className="w-full"
+                title="네이버 지도"
+              ></iframe>
+            </div>
           </Card>
         </section>
       </div>
