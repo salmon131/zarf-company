@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { bookingApi } from "@/lib/supabase";
@@ -433,7 +433,7 @@ export default function MeetingRoomCalendar() {
 
   // 클릭한 날짜 셀의 이전 날짜 셀 위치 계산 (9시 셀 상단 라인)
   const getPreviousDayCellPosition = (
-    clickedElement: HTMLDivElement,
+    clickedElement: HTMLElement,
     date: string
   ): { x: number; y: number } | null => {
     if (!calendarRef.current) return null;
@@ -1158,7 +1158,7 @@ export default function MeetingRoomCalendar() {
                 
                 {/* 통합 예약 블록 렌더링 */}
                 {(() => {
-                  const bookingBlocks: JSX.Element[] = [];
+                  const bookingBlocks: React.ReactElement[] = [];
                   
                   weekSchedule.forEach((day, dayIndex) => {
                     const dayBookings = bookings.filter((b) => b.date === day.date);
