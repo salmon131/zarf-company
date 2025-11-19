@@ -52,19 +52,6 @@ export default function CafeCard({
           </div>
         )}
       </div>
-      {/* 네이버 지도 임베드 */}
-      <div className="mt-6 rounded-lg overflow-hidden shadow-md">
-        <iframe
-          src="https://naver.me/FhfREQzF"
-          width="100%"
-          height="600"
-          frameBorder="0"
-          style={{ border: 0 }}
-          allowFullScreen
-          className="w-full"
-          title="네이버 지도"
-        ></iframe>
-      </div>
     </Card>
   );
 }
