@@ -92,14 +92,22 @@ export default function VideoListClient({
   }, [videos, selectedCategory, sortOption]);
 
   return (
-    <div className="min-h-screen bg-white py-12">
-      <div className="container mx-auto px-4">
-        {/* Hero Section */}
-        <section className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-brand-500">
-              투자 영상
-            </h1>
+    <div className="min-h-screen bg-white">
+      {/* 헤더 그라데이션 섹션 */}
+      <div className="bg-gradient-to-b from-brand-50 to-white py-12">
+        <div className="container mx-auto px-4">
+          {/* Hero Section */}
+          <section className="text-center mb-12">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <h1 className="text-4xl md:text-5xl font-display font-bold leading-[1.2] relative">
+                <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                  투자 영상
+                </span>
+                {/* 텍스트 외곽선 효과로 가독성 향상 */}
+                <span className="absolute inset-0 bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent blur-sm opacity-20 -z-10">
+                  투자 영상
+                </span>
+              </h1>
             <button
               onClick={handleRefresh}
               disabled={isRefreshing}
@@ -130,7 +138,10 @@ export default function VideoListClient({
             </p>
           )}
         </section>
-
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-12">
         {/* Category Tabs */}
         <section className="mb-8">
           <div className="flex flex-wrap gap-2 justify-center mb-6">

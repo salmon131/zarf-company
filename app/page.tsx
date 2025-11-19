@@ -388,26 +388,6 @@ export default async function HomePage() {
               </Link>
             </Card>
             <Card className="p-8 group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-white/70 backdrop-blur-sm shadow-md hover:shadow-xl">
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
-                👥
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                캐릭터 도감
-              </h3>
-              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed font-semibold">
-                만화 속 등장인물들을 만나보세요
-              </p>
-              <Link
-                href="/comic/characters"
-                className="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 font-semibold text-sm group-hover:gap-3 transition-all"
-              >
-                캐릭터 보기
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </Card>
-            <Card className="p-8 group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-white/70 backdrop-blur-sm shadow-md hover:shadow-xl">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-400 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 🔔
               </div>
