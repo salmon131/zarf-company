@@ -187,6 +187,126 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* 투자철학 섹션 */}
+      <section className="pt-20 md:pt-24 pb-20 md:pb-24 bg-[#FFF8F0] relative overflow-hidden">
+        {/* 장식 요소 */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex items-center justify-between mb-12">
+            <div>
+              <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
+                탱자프의 투자철학
+              </h2>
+              <p className="text-sm md:text-base text-gray-700 font-semibold">데이터 기반 분석과 실전 경험이 만나 만들어낸 검증된 투자 전략</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* 실적 카드 */}
+            <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-brand-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-brand-600">25%</h3>
+                  <p className="text-gray-700 font-semibold text-sm">연평균 수익률</p>
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm">최근 5년간의 검증된 실적</p>
+            </Card>
+
+            {/* 분석 방식 카드 */}
+            <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">퀀트 분석</h3>
+                  <p className="text-gray-700 font-semibold text-sm">AI 기반</p>
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm">Fwd EPS & RSI 모멘텀</p>
+            </Card>
+
+            {/* 투자 스타일 카드 */}
+            <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">유연한 전략</h3>
+                  <p className="text-gray-700 font-semibold text-sm">장기+단기</p>
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm">모멘텀 대응 매매</p>
+            </Card>
+          </div>
+
+          {/* 상세 설명 */}
+          <Card className="bg-white/70 backdrop-blur-sm p-8 border-0 shadow-md hover:shadow-xl transition-shadow duration-300">
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-white font-bold text-lg">1</span>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 mb-2 text-lg">AI 기반 데이터 분석</h4>
+                    <p className="text-gray-800 leading-relaxed font-semibold">
+                      구글, 나스닥, 인공지능, Seeking Alpha를 활용한 퀀트 분석으로 객관적이고 정확한 기업 평가
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-white font-bold text-lg">2</span>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 mb-2 text-lg">핵심 지표 중심 판단</h4>
+                    <p className="text-gray-800 leading-relaxed font-semibold">
+                      <span className="font-bold text-brand-600">Fwd EPS(미래 주당순이익)</span>를 가장 중시하며, <span className="font-bold text-brand-600">RSI 모멘텀</span>으로 매매 타이밍 포착
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-white font-bold text-lg">3</span>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 mb-2 text-lg">장기투자와 유연성의 조화</h4>
+                    <p className="text-gray-800 leading-relaxed font-semibold">
+                      장기투자를 기본으로 하되, 시장 모멘텀에 따라 <span className="font-bold">분할 매수/매도</span>로 리스크를 관리하고 수익을 극대화
+                    </p>
+                  </div>
+                </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-gray-200">
+              <div className="bg-gradient-to-r from-brand-50 to-orange-50 border-l-4 border-brand-500 rounded-lg p-6">
+                <svg className="w-10 h-10 text-brand-400 mb-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <p className="text-gray-800 text-base md:text-lg leading-relaxed font-semibold mb-4">
+                  같은 주식을 사도 <span className="font-bold text-brand-600">알고(공부) 사는 것</span>과 <span className="font-bold text-brand-600">모르고 사는 것</span>은 주식의 등락시 <span className="font-bold text-brand-600">'대응'</span>에서 차이가 난다
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
       {/* Video Highlight Section - 크림/베이지 톤 */}
       <section className="pt-12 md:pt-16 pb-20 md:pb-24 bg-[#FFF8F0] relative overflow-hidden">
         {/* 장식 요소 */}

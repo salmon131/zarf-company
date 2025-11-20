@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import VideoCard from "@/components/video/VideoCard";
 import Card from "@/components/ui/Card";
@@ -43,14 +42,6 @@ export default function VideoListClient({
 }: VideoListClientProps) {
   const [selectedCategory, setSelectedCategory] = useState("동영상");
   const [sortOption, setSortOption] = useState<SortOption>("popular");
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const router = useRouter();
-
-  const handleRefresh = () => {
-    setIsRefreshing(true);
-    router.refresh();
-    setTimeout(() => setIsRefreshing(false), 1000);
-  };
 
   // 카테고리 필터링
   const filteredVideos = useMemo(() => {
@@ -98,101 +89,106 @@ export default function VideoListClient({
         <div className="container mx-auto px-4">
           {/* Hero Section */}
           <section className="text-center mb-12">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <h1 className="text-4xl md:text-5xl font-display font-bold leading-[1.2] relative">
-                <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
-                  투자 영상
-                </span>
-                {/* 텍스트 외곽선 효과로 가독성 향상 */}
-                <span className="absolute inset-0 bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent blur-sm opacity-20 -z-10">
-                  투자 영상
-                </span>
-              </h1>
-            <button
-              onClick={handleRefresh}
-              disabled={isRefreshing}
-              className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50"
-              title="새로고침"
-            >
-              <svg
-                className={`w-5 h-5 ${isRefreshing ? "animate-spin" : ""}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-            </button>
-          </div>
-          <p className="text-lg text-gray-700">
-            영상으로 배우는 실전 투자 노하우
-          </p>
-          {videos.length > 0 && (
-            <p className="text-sm text-gray-500 mt-2">
-              총 {videos.length}개의 영상
+            <h1 className="text-4xl md:text-5xl font-display font-bold leading-[1.2] relative mb-4">
+              <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                실전 투자 채널
+              </span>
+              {/* 텍스트 외곽선 효과로 가독성 향상 */}
+              <span className="absolute inset-0 bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent blur-sm opacity-20 -z-10">
+                실전 투자 채널
+              </span>
+            </h1>
+            <p className="text-lg text-gray-700 mb-8">
+              탱자프 대표의 투자 노하우와 최신 트렌드를 담은 재밌고 유익한 주식투자 영상
             </p>
-          )}
+            
+            {/* 유튜브 구독 CTA 섹션 */}
+            <div className="max-w-2xl mx-auto bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-8 shadow-lg">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <svg className="w-12 h-12 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <h2 className="text-2xl font-bold text-gray-900">놓치지 마세요!</h2>
+              </div>
+              <p className="text-gray-700 mb-6 text-lg">
+                지금 바로 구독하고 <span className="font-bold text-brand-600">최신 주식 트렌드</span>와 <span className="font-bold text-brand-600">실전 투자 전략</span>을 가장 먼저 받아보세요
+              </p>
+              <a
+                href="https://www.youtube.com/@tangzarf?sub_confirmation=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-red-600 hover:bg-red-700 text-white text-lg font-bold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
+              >
+                <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                지금 바로 구독하기
+              </a>
+              {videos.length > 0 && (
+                <p className="text-sm text-gray-600 mt-4">
+                  이미 {videos.length}개의 영상이 준비되어 있습니다
+                </p>
+              )}
+            </div>
         </section>
         </div>
       </div>
       
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-8">
         {/* Category Tabs */}
-        <section className="mb-8">
-          <div className="flex flex-wrap gap-2 justify-center mb-6">
+        <section className="mb-6">
+          <div className="flex gap-6 justify-center mb-6 border-b border-gray-200">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-4 py-3 font-semibold transition-all relative ${
                   selectedCategory === category
-                    ? "bg-brand-500 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    ? "text-gray-900"
+                    : "text-gray-600 hover:text-gray-900"
                 }`}
               >
                 {category}
+                {selectedCategory === category && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900"></span>
+                )}
               </button>
             ))}
           </div>
 
           {/* Sort Options - 재생목록일 때는 숨김 */}
           {selectedCategory !== "재생목록" && (
-            <div className="flex gap-2 justify-center">
-            <button
-              onClick={() => setSortOption("latest")}
-              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-                sortOption === "latest"
-                  ? "bg-black text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              최신순
-            </button>
-            <button
-              onClick={() => setSortOption("popular")}
-              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-                sortOption === "popular"
-                  ? "bg-black text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              인기순
-            </button>
-            <button
-              onClick={() => setSortOption("date")}
-              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-                sortOption === "date"
-                  ? "bg-black text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              날짜순
-            </button>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => setSortOption("latest")}
+                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                  sortOption === "latest"
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                최신순
+              </button>
+              <button
+                onClick={() => setSortOption("popular")}
+                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                  sortOption === "popular"
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                인기순
+              </button>
+              <button
+                onClick={() => setSortOption("date")}
+                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                  sortOption === "date"
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                날짜순
+              </button>
             </div>
           )}
         </section>
@@ -263,6 +259,7 @@ export default function VideoListClient({
                 duration={video.duration}
                 href={video.href}
                 category={video.category}
+                publishedAt={video.publishedAt}
               />
             ))}
           </div>

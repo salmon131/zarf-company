@@ -8,6 +8,7 @@ interface VideoCardProps {
   duration?: string;
   href: string;
   category?: string;
+  publishedAt?: string;
 }
 
 export default function VideoCard({
@@ -17,6 +18,7 @@ export default function VideoCard({
   duration,
   href,
   category,
+  publishedAt,
 }: VideoCardProps) {
   return (
     <Link href={href} className="block group">
@@ -58,7 +60,7 @@ export default function VideoCard({
         <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-brand-600 transition-colors">
           {title}
         </h3>
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center justify-between text-sm mb-2">
           {category && (
             <span className="px-3 py-1 bg-gradient-to-r from-brand-100 to-orange-100 text-brand-700 rounded-full text-xs font-semibold">
               {category}
@@ -90,6 +92,15 @@ export default function VideoCard({
             </span>
           )}
         </div>
+        {publishedAt && (
+          <p className="text-xs text-gray-500">
+            {new Date(publishedAt).toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            })}
+          </p>
+        )}
       </Card>
     </Link>
   );
