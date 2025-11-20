@@ -5,6 +5,10 @@ import ComicCard from "@/components/comic/ComicCard";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 
+// Note: Client components에서 metadata export는 지원되지 않으므로,
+// 이 페이지는 layout.tsx의 기본 메타데이터를 사용합니다.
+// 필요시 별도의 서버 컴포넌트로 래핑하거나, 동적 메타데이터는 다른 방식으로 처리해야 합니다.
+
 export default function ComicPage() {
   // 작가 구인 폼 상태 관리
   const [formData, setFormData] = useState({

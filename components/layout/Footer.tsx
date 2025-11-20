@@ -8,7 +8,7 @@ export default function Footer() {
   const isHomePage = pathname === "/";
 
   return (
-    <footer className={`${isHomePage ? "bg-gradient-to-b from-[#FFF8F0] to-[#FFF4E6]" : "bg-white"} relative overflow-hidden mt-auto`}>
+    <footer className={`${isHomePage ? "bg-gradient-to-b from-[#FFF8F0] to-[#FFF4E6]" : "bg-white"} relative overflow-hidden mt-auto pb-16 md:pb-8`}>
       {/* 장식 요소 */}
       {isHomePage && (
         <>
@@ -86,14 +86,6 @@ export default function Footer() {
                   className="text-gray-600 hover:text-brand-500 transition-colors"
                 >
                   회사 소개
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/b2b"
-                  className="text-gray-600 hover:text-brand-500 transition-colors"
-                >
-                  B2B
                 </Link>
               </li>
             </ul>

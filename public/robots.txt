@@ -1,7 +1,58 @@
 # https://www.robotstxt.org/robotstxt.html
+# robots.txt for tangzarf.com
+
+# 모든 검색엔진 크롤러 기본 설정
 User-agent: *
 Allow: /
+# API 라우트는 검색 결과에 노출하지 않음
+Disallow: /api/
+# 관리자 페이지가 있다면 여기에 추가
+# Disallow: /admin/
 
-# Sitemap
+# Google 크롤러 최적화
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Crawl-delay: 0
+
+# Google 이미지 크롤러
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /icon.png
+Allow: /favicon.png
+Disallow: /api/
+
+# 네이버 검색엔진 크롤러 (Yeti)
+User-agent: Yeti
+Allow: /
+Disallow: /api/
+Crawl-delay: 1
+
+# 네이버 이미지 크롤러
+User-agent: Yeti-Image
+Allow: /images/
+Allow: /icon.png
+Allow: /favicon.png
+Disallow: /api/
+
+# 네이버 봇 (추가 호환성)
+User-agent: NaverBot
+Allow: /
+Disallow: /api/
+Crawl-delay: 1
+
+# 다음(Daum) 검색엔진 크롤러
+User-agent: Daumoa
+Allow: /
+Disallow: /api/
+Crawl-delay: 1
+
+# 빙(Bing) 검색엔진 크롤러
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Crawl-delay: 0
+
+# Sitemap 위치
 Sitemap: https://tangzarf.com/sitemap.xml
 

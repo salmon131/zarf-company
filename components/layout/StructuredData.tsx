@@ -26,9 +26,26 @@ export default function StructuredData() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "탱자프",
+    "alternateName": "자프컴퍼니",
     "url": "https://tangzarf.com",
-    "logo": "https://tangzarf.com/images/logo.png",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tangzarf.com/images/logo.png",
+      "width": 200,
+      "height": 200
+    },
     "description": "데이터 기반 퀀트 분석으로 실전 투자 전략을 제공하는 투자 교육 플랫폼",
+    "foundingDate": "2025",
+    "founder": {
+      "@type": "Person",
+      "name": "김종환"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "서울",
+      "addressRegion": "강동구",
+      "streetAddress": "고덕로 97(암사동 447-24) 2층 카페탱"
+    },
     "sameAs": [
       "https://www.youtube.com/@tangzarf",
     ],
@@ -37,6 +54,20 @@ export default function StructuredData() {
       "contactType": "Customer Service",
       "availableLanguage": ["Korean"]
     }
+  };
+
+  // BreadcrumbList 구조화된 데이터
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "홈",
+        "item": "https://tangzarf.com"
+      }
+    ]
   };
 
   return (
@@ -48,6 +79,10 @@ export default function StructuredData() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
     </>
   );

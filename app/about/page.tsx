@@ -1,4 +1,20 @@
+import { Metadata } from "next";
 import Card from "@/components/ui/Card";
+
+export const metadata: Metadata = {
+  title: "브랜드 스토리",
+  description: "자프 컴퍼니는 회원 50명으로 구성된 투자 커뮤니티에서 시작되었습니다. 만화로 투자 감각을 깨우는 탱자프의 이야기를 만나보세요.",
+  keywords: ["탱자프", "자프컴퍼니", "투자커뮤니티", "투자만화", "브랜드스토리"],
+  openGraph: {
+    title: "브랜드 스토리 | 탱자프",
+    description: "만화로 투자 감각을 깨우는 자프 컴퍼니의 이야기",
+    url: "https://tangzarf.com/about",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://tangzarf.com/about",
+  },
+};
 
 export default function AboutPage() {
   return (

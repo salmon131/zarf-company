@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import Link from "next/link";
 import YouTubePlayer from "@/components/video/YouTubePlayer";
 import { videoData, videoConfigs } from "@/lib/video-data";
@@ -6,6 +7,74 @@ import { getYouTubeVideoInfo } from "@/lib/youtube-api";
 
 interface VideoDetailPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: VideoDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  
+  let youtubeId = videoData[slug];
+  const config = videoConfigs.find((c) => c.slug === slug);
+
+  if (!youtubeId) {
+    if (/^[a-zA-Z0-9_-]{11}$/.test(slug)) {
+      youtubeId = slug;
+    } else {
+      return {
+        title: "영상을 찾을 수 없습니다",
+      };
+    }
+  }
+
+  const videoInfo = await getYouTubeVideoInfo(youtubeId);
+
+  if (!videoInfo) {
+    return {
+      title: "영상을 찾을 수 없습니다",
+    };
+  }
+
+  const title = videoInfo.title;
+  const description = videoInfo.description.substring(0, 160) || `${title} - 탱자프 투자 영상`;
+  const thumbnailUrl = videoInfo.thumbnailUrl;
+  const videoUrl = `https://tangzarf.com/video/${slug}`;
+
+  return {
+    title: `${title} | 탱자프`,
+    description,
+    keywords: ["주식투자", "투자교육", "탱자프", config?.category || "투자"].filter(Boolean),
+    openGraph: {
+      title,
+      description,
+      url: videoUrl,
+      type: "video.other",
+      images: [
+        {
+          url: thumbnailUrl,
+          width: 1280,
+          height: 720,
+          alt: title,
+        },
+      ],
+      videos: [
+        {
+          url: `https://www.youtube.com/watch?v=${youtubeId}`,
+          width: 1280,
+          height: 720,
+        },
+      ],
+    },
+    twitter: {
+      card: "player",
+      title,
+      description,
+      images: [thumbnailUrl],
+    },
+    alternates: {
+      canonical: videoUrl,
+    },
+  };
 }
 
 export default async function VideoDetailPage({
@@ -41,9 +110,38 @@ export default async function VideoDetailPage({
   const description = videoInfo.description;
   const category = config?.category || "전체";
 
+  const videoUrl = `https://tangzarf.com/video/${slug}`;
+  const youtubeUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
+
+  // 비디오 구조화된 데이터
+  const videoStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": title,
+    "description": description.substring(0, 500),
+    "thumbnailUrl": videoInfo.thumbnailUrl,
+    "uploadDate": videoInfo.publishedAt,
+    "duration": videoInfo.durationSeconds ? `PT${videoInfo.durationSeconds}S` : undefined,
+    "contentUrl": youtubeUrl,
+    "embedUrl": `https://www.youtube.com/embed/${youtubeId}`,
+    "publisher": {
+      "@type": "Organization",
+      "name": "탱자프",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://tangzarf.com/images/logo.png"
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-white py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoStructuredData) }}
+      />
+      <div className="min-h-screen bg-white py-8">
+        <div className="container mx-auto px-4 max-w-4xl">
         {/* 뒤로가기 버튼 */}
         <Link
           href="/video"
@@ -121,6 +219,7 @@ export default async function VideoDetailPage({
         )}
       </div>
     </div>
+    </>
   );
 }
 

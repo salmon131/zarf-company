@@ -3,6 +3,7 @@ import { Gowun_Batang } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import BottomTabBar from "@/components/layout/BottomTabBar";
 import FontLoader from "@/components/layout/FontLoader";
 import StructuredData from "@/components/layout/StructuredData";
 
@@ -75,6 +76,12 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'google-site-verification-code', // Google Search Console에서 받은 코드로 교체
+    other: {
+      'naver-site-verification': 'naver-site-verification-code', // 네이버 서치어드바이저에서 받은 코드로 교체
+    },
+  },
+  alternates: {
+    canonical: 'https://tangzarf.com',
   },
 };
 
@@ -89,6 +96,13 @@ export default function RootLayout({
         <link rel="icon" href="/icon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/icon.png" />
         <link rel="shortcut icon" href="/icon.png" />
+        {/* 네이버 검색 등록 메타 태그 */}
+        <meta name="naver-site-verification" content="naver-site-verification-code" />
+        {/* 네이버 검색 로봇 설정 */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        {/* 언어 및 지역 설정 */}
+        <meta httpEquiv="content-language" content="ko-KR" />
+        <meta name="geo.region" content="KR" />
         <StructuredData />
       </head>
       <body className={`${gowunBatang.variable} font-sans antialiased`}>
@@ -97,6 +111,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
+          <BottomTabBar />
         </div>
       </body>
     </html>

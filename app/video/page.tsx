@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { videoConfigs, CHANNEL_HANDLE } from "@/lib/video-data";
 import { getMultipleYouTubeVideos, getChannelVideos, getChannelPlaylists } from "@/lib/youtube-api";
 import VideoListClient from "./VideoListClient";
@@ -7,6 +8,21 @@ const categories = [
   "Shorts",
   "재생목록",
 ];
+
+export const metadata: Metadata = {
+  title: "투자 영상",
+  description: "탱자프 대표의 실전 투자 노하우와 최신 트렌드를 담은 투자 교육 영상. 주식투자, ETF, 투자 심리 등 다양한 주제의 영상을 만나보세요.",
+  keywords: ["주식투자", "투자영상", "투자교육", "탱자프", "ETF", "투자심리"],
+  openGraph: {
+    title: "투자 영상 | 탱자프",
+    description: "탱자프 대표의 실전 투자 노하우와 최신 트렌드를 담은 투자 교육 영상",
+    url: "https://tangzarf.com/video",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://tangzarf.com/video",
+  },
+};
 
 export default async function VideoPage() {
   let allVideos: Array<{
