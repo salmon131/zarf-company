@@ -50,14 +50,14 @@ export default function AboutPage() {
               <div className="border-t border-brand-200 pt-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-3 group cursor-default inline-block relative">
                   <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                    솔직하고 공감하는 주식 투자를 만화로 풀어내다
+                    현실 투자자들의 진짜 이야기를 만화로
                   </span>
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
-                  우리는 투자자의 실제 경험과 감정을 솔직하게 담아 만화로 스토리를 전개합니다. 
-                  성공뿐만 아니라 실패와 시행착오도 함께 그려내어, 투자자들이 공감하고 
-                  배울 수 있는 콘텐츠를 만들어갑니다.
+                  물타기의 고민, 익절의 유혹, 손절의 아픔까지. 교과서에는 없는 현실 투자자들의 
+                  생생한 경험과 감정을 만화로 담아냅니다. 성공담뿐 아니라 실패와 시행착오를 
+                  솔직하게 그려내어, 투자자들이 진심으로 공감하고 실전에서 배울 수 있는 콘텐츠를 만듭니다.
                 </p>
               </div>
 
