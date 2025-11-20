@@ -43,12 +43,12 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     url: "https://tangzarf.com",
-    siteName: "탱자프",
+    siteName: "탱자프 - 만화로 배우는 투자",
     title: "탱자프 - 만화로 배우는 투자",
-    description: "탱자프 대표의 투자 노하우와 최신 트렌드를 담은 재밌고 유익한 주식투자 만화와 영상. 데이터 기반 퀀트 분석으로 실전 투자 전략을 배워보세요.",
+    description: "유머, 공감, 인사이트를 담은 최초의 주식투자 만화 탱자프! 탱자프 대표의 실전 투자 노하우와 최신 트렌드를 재밌고 유익한 만화와 영상으로 만나보세요.",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/opengraph-image.jpg",
         width: 1200,
         height: 630,
         alt: "탱자프 - 만화로 배우는 투자",
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "탱자프 - 만화로 배우는 투자",
-    description: "탱자프 대표의 투자 노하우와 최신 트렌드를 담은 재밌고 유익한 주식투자 만화와 영상",
-    images: ["/twitter-image.png"],
+    description: "유머, 공감, 인사이트를 담은 최초의 주식투자 만화 탱자프! 탱자프 대표의 실전 투자 노하우와 최신 트렌드를 재밌고 유익한 만화와 영상으로 만나보세요.",
+    images: ["/twitter-image.jpg"],
     creator: "@tangzarf",
   },
   robots: {
