@@ -167,32 +167,6 @@ export default function AboutPage() {
           </Card>
         </section>
 
-        {/* Team Section */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 group cursor-default inline-block relative">
-            <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-              팀 소개
-            </span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {["만화 작가", "영상 제작", "커뮤니티 운영"].map((role, index) => (
-              <Card key={index} className="p-6 text-center">
-                <div className="text-4xl mb-4">👨‍💼</div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group cursor-default inline-block relative">
-                  <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                  {role} 팀
-                  </span>
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  전문성과 열정으로 최고의 콘텐츠를 만들어갑니다
-                </p>
-              </Card>
-            ))}
-          </div>
-        </section>
-
         {/* Location */}
         <section>
           <h2 className="text-2xl font-bold text-gray-900 mb-6 group cursor-default inline-block relative">

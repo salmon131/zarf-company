@@ -58,13 +58,6 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link
-              href="/b2b"
-              className="text-gray-700 hover:text-brand-600 transition-all duration-300 font-bold text-base md:text-lg px-3 py-2 rounded-lg hover:bg-brand-50/50 relative group hidden md:block"
-            >
-              B2B
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link
               href="/about"
               className="text-gray-700 hover:text-brand-600 transition-all duration-300 font-bold text-base md:text-lg px-3 py-2 rounded-lg hover:bg-brand-50/50 relative group hidden md:block"
             >
