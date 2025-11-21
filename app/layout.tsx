@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'google-site-verification-code', // Google Search Console에서 받은 코드로 교체
+    google: 'U5zxIV81KL7Xps6ckWZ2jxjASYZiJ7X4aOt-hX6v5VI',
     other: {
       'naver-site-verification': 'naver-site-verification-code', // 네이버 서치어드바이저에서 받은 코드로 교체
     },
@@ -93,6 +93,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        {/* Google Search Console 인증 */}
+        <meta name="google-site-verification" content="U5zxIV81KL7Xps6ckWZ2jxjASYZiJ7X4aOt-hX6v5VI" />
         <link rel="icon" href="/icon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/icon.png" />
         <link rel="shortcut icon" href="/icon.png" />
