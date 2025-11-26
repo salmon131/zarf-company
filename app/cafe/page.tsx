@@ -336,7 +336,7 @@ export default function CafePage() {
                       </p>
                     </div>
                   )}
-
+                  
                   <div className="flex gap-4 pt-4">
                     <Button
                       type="button"
