@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCalendar } from "@/src/calendar/contexts/calendar-context";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 
 import { getEventsCount, navigateDate, rangeText } from "@/src/calendar/helpers";
 

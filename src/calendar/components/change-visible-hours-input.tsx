@@ -5,7 +5,7 @@ import { Info } from "lucide-react";
 
 import { useCalendar } from "@/src/calendar/contexts/calendar-context";
 
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import { TimeInput } from "@/components/ui/time-input";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 

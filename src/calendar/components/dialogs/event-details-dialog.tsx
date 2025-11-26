@@ -3,7 +3,7 @@
 import { format, parseISO } from "date-fns";
 import { Calendar, Clock, Text, User } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import { EditEventDialog } from "@/src/calendar/components/dialogs/edit-event-dialog";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 

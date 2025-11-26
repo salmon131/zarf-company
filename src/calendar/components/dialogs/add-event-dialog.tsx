@@ -9,7 +9,7 @@ import { useDisclosure } from "@/hooks/use-disclosure";
 import { useCalendar } from "@/src/calendar/contexts/calendar-context";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/textarea";
 import { TimeInput } from "@/components/ui/time-input";
 import { SingleDayPicker } from "@/components/ui/single-day-picker";
@@ -293,7 +293,7 @@ export function AddEventDialog({ children, startDate, startTime }: IProps) {
             </Button>
           </DialogClose>
 
-          <Button form="event-form" type="submit">
+          <Button {...({ form: "event-form", type: "submit" } as any)}>
             Create Event
           </Button>
         </DialogFooter>

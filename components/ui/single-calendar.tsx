@@ -3,19 +3,35 @@
 import * as React from "react";
 import { DayPicker } from "react-day-picker";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-import { buttonVariants } from "@/components/ui/button";
-
 import { cn } from "@/lib/utils";
 
 import type { DayPickerSingleProps } from "react-day-picker";
 
-function SingleCalendar({ className, classNames, showOutsideDays = true, selected, ...props }: DayPickerSingleProps) {
+// buttonVariants는 Button 컴포넌트에서 제공되지 않으므로 직접 스타일 정의
+const buttonVariants = ({ variant }: { variant?: string }) => {
+  const variants: Record<string, string> = {
+    default: "h-9 w-9 bg-transparent p-0 opacity-50 hover:opacity-100",
+    outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+    ghost: "hover:bg-accent hover:text-accent-foreground",
+  };
+  return variants[variant || "default"] || variants.default;
+};
+
+interface SingleCalendarProps {
+  className?: string;
+  classNames?: any;
+  showOutsideDays?: boolean;
+  selected?: Date;
+  [key: string]: any;
+}
+
+function SingleCalendar({ className, classNames, showOutsideDays = true, selected, ...props }: SingleCalendarProps) {
   const [currentMonth, setCurrentMonth] = React.useState<Date | undefined>(selected instanceof Date ? selected : undefined);
 
   return (
     <DayPicker
-      selected={selected}
+      mode="single"
+      selected={selected as Date | undefined}
       showOutsideDays={showOutsideDays}
       month={currentMonth}
       onMonthChange={setCurrentMonth}
@@ -49,9 +65,9 @@ function SingleCalendar({ className, classNames, showOutsideDays = true, selecte
         ...classNames,
       }}
       components={{
-        IconLeft: ({ className, ...props }) => <ChevronLeft className={cn("h-4 w-4", className)} {...props} />,
-        IconRight: ({ className, ...props }) => <ChevronRight className={cn("h-4 w-4", className)} {...props} />,
-      }}
+        IconLeft: ({ className, ...props }: any) => <ChevronLeft className={cn("h-4 w-4", className)} {...props} />,
+        IconRight: ({ className, ...props }: any) => <ChevronRight className={cn("h-4 w-4", className)} {...props} />,
+      } as any}
       {...props}
     />
   );

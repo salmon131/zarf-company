@@ -1,6 +1,8 @@
 "use client";
 
+// @ts-ignore - react-dnd v14에서 useDrop는 타입 정의가 불완전함
 import { useDrop } from "react-dnd";
+import type { DropTargetMonitor } from "react-dnd";
 import { parseISO, differenceInMilliseconds } from "date-fns";
 
 import { useUpdateEvent } from "@/src/calendar/hooks/use-update-event";
@@ -43,7 +45,7 @@ export function DroppableTimeBlock({ date, hour, minute, children }: DroppableTi
 
         return { moved: true };
       },
-      collect: monitor => ({
+      collect: (monitor: DropTargetMonitor) => ({
         isOver: monitor.isOver(),
         canDrop: monitor.canDrop(),
       }),

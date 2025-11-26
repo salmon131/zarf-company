@@ -1,6 +1,8 @@
 "use client";
 
+// @ts-ignore - react-dnd v14에서 useDrag는 타입 정의가 불완전함
 import { useDrag } from "react-dnd";
+import type { DragSourceMonitor } from "react-dnd";
 import { useRef, useEffect } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 
@@ -27,7 +29,7 @@ export function DraggableEvent({ event, children }: DraggableEventProps) {
       const height = ref.current?.offsetHeight || 0;
       return { event, children, width, height };
     },
-    collect: monitor => ({ isDragging: monitor.isDragging() }),
+    collect: (monitor: DragSourceMonitor) => ({ isDragging: monitor.isDragging() }),
   }));
 
   // Hide the default drag preview

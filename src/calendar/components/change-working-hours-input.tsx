@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Info, Moon } from "lucide-react";
 import { useCalendar } from "@/src/calendar/contexts/calendar-context";
 
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import { Switch } from "@/components/ui/switch";
 import { TimeInput } from "@/components/ui/time-input";
 

@@ -1,6 +1,8 @@
 "use client";
 
+// @ts-ignore - react-dnd v14에서 useDragLayer는 타입 정의가 불완전함
 import { useDragLayer } from "react-dnd";
+import type { DragLayerMonitor } from "react-dnd";
 
 import type { IEvent } from "@/src/calendar/interfaces";
 
@@ -12,7 +14,7 @@ interface IDragItem {
 }
 
 export function CustomDragLayer() {
-  const { isDragging, item, currentOffset, initialOffset, initialClientOffset } = useDragLayer(monitor => ({
+  const { isDragging, item, currentOffset, initialOffset, initialClientOffset } = useDragLayer((monitor: DragLayerMonitor) => ({
     item: monitor.getItem() as IDragItem | null,
     itemType: monitor.getItemType(),
     isDragging: monitor.isDragging(),

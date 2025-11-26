@@ -10,7 +10,7 @@ import { useCalendar } from "@/src/calendar/contexts/calendar-context";
 import { useUpdateEvent } from "@/src/calendar/hooks/use-update-event";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/textarea";
 import { TimeInput } from "@/components/ui/time-input";
 import { SingleDayPicker } from "@/components/ui/single-day-picker";
@@ -309,7 +309,7 @@ export function EditEventDialog({ children, event }: IProps) {
             </Button>
           </DialogClose>
 
-          <Button form="event-form" type="submit">
+          <Button {...({ form: "event-form", type: "submit" } as any)}>
             Save changes
           </Button>
         </DialogFooter>
