@@ -226,22 +226,29 @@ export default function ComicSeriesPage({
     setSubmitStatus("idle");
 
     try {
-      // TODO: 실제 API 엔드포인트로 변경 필요
-      // 현재는 mailto 링크로 대체
-      const seriesTitle = seriesName === "chipinside" ? "칩 인사이드" : "만화";
-      const subject = encodeURIComponent(`[${seriesTitle} 작가 지원] ${formData.name}님의 지원서`);
-      const body = encodeURIComponent(
-        `이름: ${formData.name}\n이메일: ${formData.email}\n연락처: ${formData.phone}\n포트폴리오: ${formData.portfolio || "없음"}\n\n메시지:\n${formData.message}`
-      );
-      window.location.href = `mailto:qk006@naver.com?subject=${subject}&body=${body}`;
+      const response = await fetch("/api/artist-application", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "신청 정보 저장에 실패했습니다.");
+      }
+
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", phone: "", portfolio: "", message: "" });
+      setIsSubmitting(false);
       
-      // 성공 메시지 표시
       setTimeout(() => {
-        setSubmitStatus("success");
-        setFormData({ name: "", email: "", phone: "", portfolio: "", message: "" });
-        setIsSubmitting(false);
-      }, 500);
-    } catch (error) {
+        setSubmitStatus("idle");
+      }, 3000);
+    } catch (error: any) {
+      console.error("신청 정보 저장 오류:", error);
       setSubmitStatus("error");
       setIsSubmitting(false);
     }
@@ -413,16 +420,22 @@ export default function ComicSeriesPage({
                   </div>
                   
                   {submitStatus === "success" && (
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                      <p className="text-green-700 text-sm">
-                        지원서가 전송되었습니다! 이메일 앱이 열리면 전송 버튼을 눌러주세요.
+                    <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl shadow-sm">
+                      <p className="text-green-700 text-sm font-medium flex items-center gap-2">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        지원서가 성공적으로 접수되었습니다! 빠른 시일 내에 연락드리겠습니다.
                       </p>
                     </div>
                   )}
                   
                   {submitStatus === "error" && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-red-700 text-sm">
+                    <div className="p-4 bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 rounded-xl shadow-sm">
+                      <p className="text-red-700 text-sm font-medium flex items-center gap-2">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
                         오류가 발생했습니다. 다시 시도해주세요.
                       </p>
                     </div>
@@ -539,16 +552,22 @@ export default function ComicSeriesPage({
                   </div>
                   
                   {submitStatus === "success" && (
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                      <p className="text-green-700 text-sm">
-                        지원서가 전송되었습니다! 이메일 앱이 열리면 전송 버튼을 눌러주세요.
+                    <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl shadow-sm">
+                      <p className="text-green-700 text-sm font-medium flex items-center gap-2">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        지원서가 성공적으로 접수되었습니다! 빠른 시일 내에 연락드리겠습니다.
                       </p>
                     </div>
                   )}
                   
                   {submitStatus === "error" && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-red-700 text-sm">
+                    <div className="p-4 bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 rounded-xl shadow-sm">
+                      <p className="text-red-700 text-sm font-medium flex items-center gap-2">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
                         오류가 발생했습니다. 다시 시도해주세요.
                       </p>
                     </div>

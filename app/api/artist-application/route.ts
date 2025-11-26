@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { studyApplicationApi } from "@/lib/supabase";
+import { artistApplicationApi } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { studyType, phone, preferredTime, ageRange, desiredContent } = body;
+    const { name, email, phone, portfolio, message } = body;
 
     // 필수 필드 검증
-    if (!studyType || !phone || !preferredTime || !ageRange) {
+    if (!name || !email || !phone) {
       return NextResponse.json(
         { error: "필수 필드를 모두 입력해주세요." },
         { status: 400 }
@@ -15,12 +15,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Supabase에 신청 정보 저장
-    const application = await studyApplicationApi.create({
-      study_type: studyType,
-      phone: phone,
-      preferred_time: preferredTime,
-      age_range: ageRange,
-      desired_content: desiredContent || null,
+    const application = await artistApplicationApi.create({
+      name,
+      email,
+      phone,
+      portfolio: portfolio || null,
+      message: message || null,
     });
 
     if (!application) {

@@ -51,7 +51,7 @@ export default function CommunityPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "이메일 전송에 실패했습니다.");
+        throw new Error(data.error || "신청 정보 저장에 실패했습니다.");
       }
 
       setSubmitStatus("success");
@@ -63,7 +63,7 @@ export default function CommunityPage() {
         setSubmitStatus("idle");
       }, 2000);
     } catch (error: any) {
-      console.error("이메일 전송 오류:", error);
+      console.error("신청 정보 저장 오류:", error);
       setSubmitStatus("error");
       setIsSubmitting(false);
     }

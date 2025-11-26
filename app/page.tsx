@@ -446,7 +446,7 @@ export default async function HomePage() {
                     topic="기초 투자"
                     deadline="2024.12.30"
                     capacity="3명"
-                    description="퀀트(계량)&모멘텀 기반으로 주식을 공부하는 전문적인 스터디예요. 편안한 카페 분위기에서 함께 배워요"
+                    description="퀀트(계량)&모멘텀 기반으로 주식을 공부해요. 편안한 카페에서 함께 배워요"
                     status="recruiting"
                     href="/community"
                   />

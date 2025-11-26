@@ -74,10 +74,10 @@ export default function StudyCard({
             : (status === "ongoing" ? "참여 인원:" : "모집 인원:");
           
           return (
-            <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div className="flex items-center gap-2 text-sm text-gray-600">
               <span className="font-medium">{label}</span>
               <span>{capacityValue}</span>
-            </div>
+          </div>
           );
         })()}
       </div>

@@ -27,18 +27,42 @@ export default function CafePage() {
     setRentalFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const [isSubmittingRental, setIsSubmittingRental] = useState(false);
+  const [rentalSubmitStatus, setRentalSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
   const handleRentalSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`[카페탱 대관 문의] ${rentalFormData.name}님의 문의`);
-    const body = encodeURIComponent(
-      `이름: ${rentalFormData.name}\n이메일: ${rentalFormData.email}\n연락처: ${rentalFormData.phone}\n목적: ${rentalFormData.purpose}\n희망 날짜: ${rentalFormData.date}\n희망 시간: ${rentalFormData.time}\n\n문의 내용:\n${rentalFormData.message}`
-    );
-    window.location.href = `mailto:qk006@naver.com?subject=${subject}&body=${body}`;
-    
-    setTimeout(() => {
-      setShowRentalInquiry(false);
+    setIsSubmittingRental(true);
+    setRentalSubmitStatus("idle");
+
+    try {
+      const response = await fetch("/api/rental-inquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rentalFormData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "문의 정보 저장에 실패했습니다.");
+      }
+
+      setRentalSubmitStatus("success");
       setRentalFormData({ name: "", email: "", phone: "", purpose: "", date: "", time: "", message: "" });
-    }, 500);
+      setIsSubmittingRental(false);
+      
+      setTimeout(() => {
+        setShowRentalInquiry(false);
+        setRentalSubmitStatus("idle");
+      }, 2000);
+    } catch (error: any) {
+      console.error("문의 정보 저장 오류:", error);
+      setRentalSubmitStatus("error");
+      setIsSubmittingRental(false);
+    }
   };
 
   return (
@@ -58,7 +82,7 @@ export default function CafePage() {
               data-aos-duration="600"
             >
               <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
-                무인 카공 & 만화 카페
+                카공 & 만화 카페
               </span>
               {/* 텍스트 외곽선 효과로 가독성 향상 */}
               <span className="absolute inset-0 bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent blur-sm opacity-20 -z-10">
@@ -290,12 +314,36 @@ export default function CafePage() {
                     />
                   </div>
                   
+                  {/* 성공/에러 메시지 */}
+                  {rentalSubmitStatus === "success" && (
+                    <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl shadow-sm">
+                      <p className="text-green-700 text-sm font-medium flex items-center gap-2">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        문의가 성공적으로 접수되었습니다! 빠른 시일 내에 연락드리겠습니다.
+                      </p>
+                    </div>
+                  )}
+                  
+                  {rentalSubmitStatus === "error" && (
+                    <div className="p-4 bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 rounded-xl shadow-sm">
+                      <p className="text-red-700 text-sm font-medium flex items-center gap-2">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        오류가 발생했습니다. 다시 시도해주세요.
+                      </p>
+                    </div>
+                  )}
+
                   <div className="flex gap-4 pt-4">
                     <Button
                       type="button"
                       onClick={() => {
                         setShowRentalInquiry(false);
                         setRentalFormData({ name: "", email: "", phone: "", purpose: "", date: "", time: "", message: "" });
+                        setRentalSubmitStatus("idle");
                       }}
                       variant="outline"
                       className="flex-1"
@@ -306,8 +354,9 @@ export default function CafePage() {
                       type="submit"
                       variant="primary"
                       className="flex-1"
+                      disabled={isSubmittingRental}
                     >
-                      문의하기
+                      {isSubmittingRental ? "전송 중..." : "문의하기"}
                     </Button>
                   </div>
                 </form>
