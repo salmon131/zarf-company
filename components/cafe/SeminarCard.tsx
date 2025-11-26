@@ -35,7 +35,7 @@ export default function SeminarCard({
         <div className="mb-2">
           <span className="text-base text-brand-600 font-bold">{date}</span>
         </div>
-        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{title}</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
         {instructor && (
           <p className="text-base text-gray-700 mb-2 font-semibold">강사: {instructor}</p>
         )}

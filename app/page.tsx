@@ -1,11 +1,14 @@
 import Link from "next/link";
+import Image from "next/image";
 import Button from "@/components/ui/Button";
 import ComicCard from "@/components/comic/ComicCard";
 import VideoCard from "@/components/video/VideoCard";
 import SeminarCard from "@/components/cafe/SeminarCard";
+import StudyCard from "@/components/community/StudyCard";
 import Card from "@/components/ui/Card";
 import ChannelBanner from "@/components/home/ChannelBanner";
 import CountUpNumber from "@/components/ui/CountUpNumber";
+import CafeImageSlider from "@/components/cafe/CafeImageSlider";
 import { CHANNEL_HANDLE, videoConfigs } from "@/lib/video-data";
 import { getChannelVideos, getMultipleYouTubeVideos } from "@/lib/youtube-api";
 
@@ -364,71 +367,37 @@ export default async function HomePage() {
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          {/* 카페 & 세미나 섹션 */}
+          {/* 카페 섹션 */}
           <div className="mb-28 md:mb-32">
             <div className="flex items-center justify-between mb-12" data-aos="fade-up">
               <div>
                 <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
-              카페 & 세미나
+              카페탱
             </h2>
-                <p className="text-sm md:text-base text-gray-700 font-semibold">오프라인에서 만나는 투자 커뮤니티</p>
+                <p className="text-sm md:text-base text-gray-700 font-semibold">편하게 쉬고, 작업하고, 공부할 수 있는 공간</p>
               </div>
             <Link
-            href="/community/seminar"
+            href="/cafe"
                 className="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-500 to-orange-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
                 data-aos="fade-left"
             >
-                세미나 일정 보기
+                카페 소개 보기
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div data-aos="fade-right" data-aos-delay="100" data-aos-duration="800" data-aos-easing="ease-in-out">
-                <Card className="p-8 bg-white/70 backdrop-blur-sm border-0 shadow-md hover:shadow-2xl transition-all duration-300">
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center text-2xl shadow-lg">
-                        🏠
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-900">
-                        투자자들의 아지트
-                      </h3>
-                    </div>
-                    <p className="text-gray-800 leading-relaxed text-base md:text-lg font-semibold">
-                      '카페탱'에서 만나는 투자 커뮤니티. 오프라인 세미나와
-                      스터디를 통해 실전 투자 감각을 키워보세요.
-                    </p>
-                    <Button href="/cafe" variant="primary" className="shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-                      카페 소개 보기
-                    </Button>
-                  </div>
-                </Card>
-              </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="transform hover:-translate-y-2 transition-all duration-300" data-aos="fade-left" data-aos-delay="100">
-              <SeminarCard
-                title="주식 투자 입문 세미나"
-                date="2024.12.15"
-                instructor="김투자"
-                description="처음 시작하는 주식 투자자를 위한 기초 강의"
-                href="/community/seminar/stock-basics"
-                price="무료"
-              />
-                </div>
-                <div className="transform hover:-translate-y-2 transition-all duration-300" data-aos="fade-left" data-aos-delay="200">
-              <SeminarCard
-                title="ETF 투자 전략"
-                date="2024.12.22"
-                instructor="이ETF"
-                description="ETF를 활용한 안정적인 투자 전략"
-                href="/community/seminar/etf-strategy"
-                price="30,000원"
-              />
-            </div>
-          </div>
-        </div>
+          {/* 카페 이미지 슬라이더 */}
+          <CafeImageSlider
+            images={[
+              "/images/cafe/cafe-1.jpg",
+              "/images/cafe/cafe-2.jpg",
+              "/images/cafe/cafe-3.jpg",
+              "/images/cafe/cafe-4.jpg",
+              "/images/cafe/cafe-5.jpg",
+              "/images/cafe/cafe-6.jpg",
+            ]}
+          />
           </div>
 
       {/* Community Section */}
@@ -451,27 +420,60 @@ export default async function HomePage() {
                 </svg>
               </Link>
             </div>
-            <p className="text-base md:text-lg text-gray-800 mb-8 max-w-3xl leading-relaxed font-semibold" data-aos="fade-up" data-aos-delay="100">
-            함께 배우고 성장하는 투자 커뮤니티에 참여해보세요. 온라인과
-            오프라인에서 만나는 다양한 스터디와 이벤트를 만나보실 수 있습니다.
-          </p>
-            <div className="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="200">
-              <Button 
-                href="/community" 
-                variant="primary" 
-                size="lg"
-                className="shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 bg-gradient-to-r from-brand-500 to-orange-500"
-              >
-              커뮤니티 참여하기
-            </Button>
-              <Button 
-                href="/community/gallery" 
-                variant="outline" 
-                size="lg"
-                className="shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border-2"
-              >
-              갤러리 보기
-            </Button>
+            
+            {/* 스터디 이미지 및 카드 */}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8 items-stretch">
+              {/* 왼쪽: 첫 번째 스터디 홍보 이미지 */}
+              <div className="md:col-span-3 relative rounded-lg overflow-hidden shadow-lg flex" data-aos="fade-right" data-aos-delay="50" data-aos-duration="600">
+                <div className="relative w-full" style={{ aspectRatio: '4 / 3' }}>
+                  <Image
+                    src="/images/community/studies/stock-study-2025/1.jpg"
+                    alt="스터디 홍보 이미지"
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 60vw"
+                  />
+                </div>
+              </div>
+              
+              {/* 오른쪽: 스터디 및 세미나 카드 */}
+              <div className="md:col-span-2 grid grid-cols-1 gap-6 h-full">
+                {/* 모집중인 스터디 */}
+                <div data-aos="fade-left" data-aos-delay="100" data-aos-duration="600">
+                  <StudyCard
+                    title="커피와 함께 듣는 주식 이야기"
+                    topic="기초 투자"
+                    deadline="2024.12.30"
+                    capacity="3명"
+                    description="퀀트(계량)&모멘텀 기반으로 주식을 공부하는 전문적인 스터디예요. 편안한 카페 분위기에서 함께 배워요"
+                    status="recruiting"
+                    href="/community"
+                  />
+                </div>
+                
+                {/* 진행중인 스터디 */}
+                <div data-aos="fade-left" data-aos-delay="200" data-aos-duration="600">
+                  <StudyCard
+                    title="주린이 탈출 프로젝트"
+                    topic="기초 투자"
+                    capacity="3명"
+                    description="사회초년생을 위한 투자 기초부터 실전까지 함께 배우는 스터디입니다"
+                    status="ongoing"
+                    href="/community"
+                  />
+                </div>
+                
+                {/* 세미나 */}
+                <div data-aos="fade-left" data-aos-delay="300" data-aos-duration="600">
+                  <SeminarCard
+                    title="✨ 퀀트로 마무리하는 한 해"
+                    date="2024.12.26 (저녁 7시~10시)"
+                    description="25년 정리 및 내년 주식전망과 대응, 26년 투자 이슈를 다루는 퀀트 투자자의 송년 모임입니다. 자유로운 다과의 시간도 함께 즐겨요"
+                    href="/community/seminar/quant-year-end"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
