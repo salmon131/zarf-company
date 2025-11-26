@@ -52,13 +52,21 @@ export default function ComicPage() {
     }
   };
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FFF8F0]">
       {/* 헤더 그라데이션 섹션 */}
-      <div className="bg-gradient-to-b from-brand-50 to-white py-12">
-        <div className="container mx-auto px-4">
+      <div className="relative py-12 overflow-hidden">
+        {/* 장식 요소 - 큰 원형 글로우 */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           {/* Hero Section */}
           <section className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative">
+            <h1 
+              className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative"
+              data-aos="fade-up"
+              data-aos-duration="600"
+            >
               <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
                 만화 시리즈
               </span>
@@ -67,39 +75,58 @@ export default function ComicPage() {
                 만화 시리즈
               </span>
             </h1>
-            <p className="text-lg text-gray-700">
+            <p 
+              className="text-lg text-gray-700"
+              data-aos="fade-up"
+              data-aos-delay="100"
+              data-aos-duration="600"
+            >
               연재 및 기획 중인 만화 시리즈를 만나보세요
             </p>
           </section>
         </div>
       </div>
       
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-12 relative z-10">
 
         {/* Series Section */}
         <section className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">시리즈</h2>
+          <h2 
+            className="text-2xl font-bold text-gray-900 mb-6"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
+            시리즈
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <ComicCard
-              title="이상한 녀석들의 주식투자 - 탱자프"
-              description="만화로 쉽고 재미있게 배우는 주식 투자 이야기"
-              href="/comic/tangzarf"
-              tags={["실전", "만화"]}
-              imageUrl="/images/comic/tangzarf/cover.jpg"
-            />
-            <ComicCard
-              title="칩 인사이드"
-              description="제작 예정"
-              href="/comic/chipinside"
-              tags={["제작 예정"]}
-              imageUrl="/images/comic/chipinside/cover.jpg"
-            />
+            <div data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
+              <ComicCard
+                title="이상한 녀석들의 주식투자 - 탱자프"
+                description="만화로 쉽고 재미있게 배우는 주식 투자 이야기"
+                href="/comic/tangzarf"
+                tags={["실전", "만화"]}
+                imageUrl="/images/comic/tangzarf/cover.jpg"
+              />
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+              <ComicCard
+                title="칩 인사이드"
+                description="제작 예정"
+                href="/comic/chipinside"
+                tags={["제작 예정"]}
+                imageUrl="/images/comic/chipinside/cover.jpg"
+              />
+            </div>
           </div>
         </section>
 
         {/* 작가 구인 Section */}
         <section>
-          <Card className="p-8 bg-brand-50">
+          <Card 
+            className="p-8 bg-brand-50"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             <div className="text-center mb-8">
               <div className="text-6xl mb-4">🎨</div>
               <h3 className="text-3xl font-bold text-gray-900 mb-4">

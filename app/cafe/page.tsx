@@ -42,13 +42,21 @@ export default function CafePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FFF8F0]">
       {/* 헤더 그라데이션 섹션 */}
-      <div className="bg-gradient-to-b from-brand-50 to-white py-12">
-        <div className="container mx-auto px-4">
+      <div className="relative py-12 overflow-hidden">
+        {/* 장식 요소 - 큰 원형 글로우 */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           {/* Hero Section */}
           <section className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative">
+            <h1 
+              className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative"
+              data-aos="fade-up"
+              data-aos-duration="600"
+            >
               <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
                 무인 카공 & 만화 카페
               </span>
@@ -57,7 +65,12 @@ export default function CafePage() {
                 카페탱
               </span>
             </h1>
-            <p className="text-lg text-gray-700">
+            <p 
+              className="text-lg text-gray-700"
+              data-aos="fade-up"
+              data-aos-delay="100"
+              data-aos-duration="600"
+            >
               편하게 쉬고, 작업하고, 공부할 수 있는 공간
             </p>
           </section>
@@ -68,18 +81,24 @@ export default function CafePage() {
 
         {/* About Section */}
         <section className="mb-16">
-          <CafeCard
+          <div data-aos="fade-up" data-aos-duration="600">
+            <CafeCard
             title="카페탱"
             description="탱자프 사무실 바깥 공간에 마련한 카페입니다. 편하게 쉬고, 작업하고, 공부할 수 있도록 만들어진 공간입니다. 적지 않은 종류의 만화책과 유익한 책들도 준비되어있습니다. 회의실은 무료이며 2시간 이내, 3인 이상(과외, 스터디 등) 모임에 한해 사용할 수 있습니다."
             address="서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱"
             hours="매일 09:00 - 01:00"
             phone="010-4026-7291"
           />
+          </div>
         </section>
 
         {/* Photo Gallery */}
         <section className="mb-16">
-          <div className="flex flex-wrap items-center gap-3 mb-6">
+          <div 
+            className="flex flex-wrap items-center gap-3 mb-6"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             {["공부", "만화", "회의실", "무인카페", "하루종일", "자유롭게"].map((tag, index) => (
               <span
                 key={index}
@@ -92,7 +111,13 @@ export default function CafePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card key={i} className="p-0 overflow-hidden group hover:shadow-xl transition-shadow duration-300">
+              <Card 
+                key={i} 
+                className="p-0 overflow-hidden group hover:shadow-xl transition-shadow duration-300"
+                data-aos="fade-up"
+                data-aos-delay={i * 50}
+                data-aos-duration="600"
+              >
                 <div className="bg-gray-100 relative overflow-hidden" style={{ aspectRatio: '16 / 13.5' }}>
                   <Image
                     src={`/images/cafe/cafe-${i}.jpg`}
@@ -109,7 +134,11 @@ export default function CafePage() {
 
         {/* Meeting Room Section */}
         <section className="mb-16">
-          <div className="text-center mb-8">
+          <div 
+            className="text-center mb-8"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               회의실 사용 시간표
             </h2>
@@ -117,12 +146,18 @@ export default function CafePage() {
               무료로 회의실을 예약하고 사용할 수 있어요
             </p>
           </div>
-          <MeetingRoomCalendar />
+          <div data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
+            <MeetingRoomCalendar />
+          </div>
         </section>
 
         {/* Rental Inquiry Section */}
         <section className="mb-16">
-          <Card className="p-8 bg-brand-50">
+          <Card 
+            className="p-8 bg-brand-50"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 대관 문의
@@ -283,7 +318,11 @@ export default function CafePage() {
 
         {/* 오시는 길 Section */}
         <section className="mb-16">
-          <div className="text-center mb-8">
+          <div 
+            className="text-center mb-8"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               오시는 길
             </h2>
@@ -291,7 +330,12 @@ export default function CafePage() {
               서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱
             </p>
           </div>
-          <Card className="p-0 overflow-hidden">
+          <Card 
+            className="p-0 overflow-hidden"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="600"
+          >
             <div className="rounded-lg overflow-hidden shadow-md">
               <iframe
                 src="https://naver.me/FhfREQzF"

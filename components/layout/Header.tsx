@@ -7,10 +7,9 @@ import Button from "@/components/ui/Button";
 
 export default function Header() {
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
 
   return (
-    <header className={`${isHomePage ? "bg-[#FFF8F0]/95" : "bg-white/95"} backdrop-blur-md border-b ${isHomePage ? "border-brand-200/30" : "border-gray-200/50"} sticky top-0 z-50 shadow-sm`}>
+    <header className="bg-[#FFF8F0]/95 backdrop-blur-md border-b border-brand-200/30 sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-14 md:h-20">
           {/* 로고 - 모바일/데스크톱 모두 표시 */}

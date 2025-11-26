@@ -12,7 +12,6 @@ interface TabItem {
 
 export default function BottomTabBar() {
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
 
   const tabs: TabItem[] = [
     {
@@ -98,7 +97,7 @@ export default function BottomTabBar() {
   };
 
   return (
-    <nav className={`fixed bottom-0 left-0 right-0 z-50 ${isHomePage ? "bg-[#FFF8F0]/95" : "bg-white/95"} backdrop-blur-md border-t ${isHomePage ? "border-brand-200/30" : "border-gray-200/50"} shadow-[0_-2px_10px_rgba(0,0,0,0.1)] md:hidden safe-area-bottom`}>
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#FFF8F0]/95 backdrop-blur-md border-t border-brand-200/30 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] md:hidden safe-area-bottom">
       <div className="flex items-center justify-around h-16 px-2">
         {tabs.map((tab) => {
           const active = isActive(tab.href);

@@ -18,13 +18,21 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FFF8F0]">
       {/* 헤더 그라데이션 섹션 */}
-      <div className="bg-gradient-to-b from-brand-50 to-white py-12">
-        <div className="container mx-auto px-4 max-w-4xl">
+      <div className="relative py-12 overflow-hidden">
+        {/* 장식 요소 - 큰 원형 글로우 */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
+        
+        <div className="container mx-auto px-4 max-w-4xl relative z-10">
           {/* Hero Section */}
           <section className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative">
+            <h1 
+              className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative"
+              data-aos="fade-up"
+              data-aos-duration="600"
+            >
               <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
                 브랜드 스토리
               </span>
@@ -33,18 +41,27 @@ export default function AboutPage() {
                 브랜드 스토리
               </span>
             </h1>
-            <p className="text-lg text-gray-700">
+            <p 
+              className="text-lg text-gray-700"
+              data-aos="fade-up"
+              data-aos-delay="100"
+              data-aos-duration="600"
+            >
               만화로 투자 감각을 깨우는 자프 컴퍼니
             </p>
           </section>
         </div>
       </div>
       
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="container mx-auto px-4 py-12 max-w-4xl relative z-10">
 
         {/* Philosophy */}
         <section className="mb-16">
-          <Card className="p-8 bg-brand-50">
+          <Card 
+            className="p-8 bg-brand-50"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             <h2 className="text-2xl font-bold text-gray-900 mb-6 group cursor-default inline-block relative">
               <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                 만화를 통한 우리들의 주식 이야기
@@ -52,7 +69,7 @@ export default function AboutPage() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
             </h2>
             <div className="space-y-6">
-              <div>
+              <div data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
             <p className="text-gray-700 leading-relaxed mb-4">
                   자프 컴퍼니는 회원 50명으로 구성된 투자 커뮤니티에서 시작되었습니다. 
                   함께 주식투자를 공부하고 실전 투자를 경험하며, 투자 여정을 함께 걸어왔습니다.
@@ -63,7 +80,12 @@ export default function AboutPage() {
                 </p>
               </div>
               
-              <div className="border-t border-brand-200 pt-6">
+              <div 
+                className="border-t border-brand-200 pt-6"
+                data-aos="fade-up"
+                data-aos-delay="200"
+                data-aos-duration="600"
+              >
                 <h3 className="text-lg font-bold text-gray-900 mb-3 group cursor-default inline-block relative">
                   <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                     현실 투자자들의 진짜 이야기를 만화로
@@ -77,7 +99,12 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              <div className="border-t border-brand-200 pt-6">
+              <div 
+                className="border-t border-brand-200 pt-6"
+                data-aos="fade-up"
+                data-aos-delay="300"
+                data-aos-duration="600"
+              >
                 <h3 className="text-lg font-bold text-gray-900 mb-3 group cursor-default inline-block relative">
                   <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                     우리의 목표
@@ -96,15 +123,29 @@ export default function AboutPage() {
 
         {/* Founder Section */}
         <section className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 group cursor-default inline-block relative">
+          <h2 
+            className="text-2xl font-bold text-gray-900 mb-6 group cursor-default inline-block relative"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
               대표 소개
             </span>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
           </h2>
-          <Card className="p-6">
+          <Card 
+            className="p-6"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="600"
+          >
             <div className="flex flex-col md:flex-row gap-6">
-              <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto md:mx-0 overflow-hidden flex-shrink-0">
+              <div 
+                className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto md:mx-0 overflow-hidden flex-shrink-0"
+                data-aos="zoom-in"
+                data-aos-delay="150"
+                data-aos-duration="600"
+              >
                 <img 
                   src="/images/ceo-profile.jpg" 
                   alt="김종환 대표" 
@@ -112,18 +153,28 @@ export default function AboutPage() {
                 />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group cursor-default inline-block relative">
+                <h3 
+                  className="text-xl font-bold text-gray-900 mb-2 group cursor-default inline-block relative"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                  data-aos-duration="600"
+                >
                   <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                     김종환
                   </span>
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
                 </h3>
-                <p className="text-gray-600 mb-4 font-medium">
+                <p 
+                  className="text-gray-600 mb-4 font-medium"
+                  data-aos="fade-up"
+                  data-aos-delay="250"
+                  data-aos-duration="600"
+                >
                   부동산 자산투자 및 개발 전문가 · 투자콘텐츠 크리에이터 · (주)자프컴퍼니 대표
                 </p>
                 
                 <div className="space-y-4 text-sm">
-                  <div>
+                  <div data-aos="fade-up" data-aos-delay="300" data-aos-duration="600">
                     <h4 className="font-bold text-gray-900 mb-2 group cursor-default inline-block relative">
                       <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                         커리어 & 경력
@@ -136,7 +187,7 @@ export default function AboutPage() {
                     </ul>
                   </div>
 
-                  <div>
+                  <div data-aos="fade-up" data-aos-delay="350" data-aos-duration="600">
                     <h4 className="font-bold text-gray-900 mb-2 group cursor-default inline-block relative">
                       <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                         학력
@@ -149,7 +200,7 @@ export default function AboutPage() {
                     </ul>
                   </div>
 
-                  <div>
+                  <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="600">
                     <h4 className="font-bold text-gray-900 mb-2 group cursor-default inline-block relative">
                       <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                         기업 활동
@@ -163,7 +214,7 @@ export default function AboutPage() {
                     </ul>
                   </div>
 
-                  <div>
+                  <div data-aos="fade-up" data-aos-delay="450" data-aos-duration="600">
                     <h4 className="font-bold text-gray-900 mb-2 group cursor-default inline-block relative">
                       <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                         투자 성과
@@ -185,26 +236,40 @@ export default function AboutPage() {
 
         {/* Location */}
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 group cursor-default inline-block relative">
+          <h2 
+            className="text-2xl font-bold text-gray-900 mb-6 group cursor-default inline-block relative"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             <span className="group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:via-brand-500 group-hover:to-orange-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
               오시는 길
             </span>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
           </h2>
-          <Card className="p-6">
+          <Card 
+            className="p-6"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="600"
+          >
             <div className="space-y-4">
-              <div>
+              <div data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">
                 <h3 className="font-bold text-gray-900 mb-2">주소</h3>
                 <p className="text-gray-700">서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱</p>
               </div>
-              <div>
+              <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
                 <h3 className="font-bold text-gray-900 mb-2">교통편</h3>
                 <p className="text-gray-700">
                  암사역사공원역 2번 출구에서 도보 5분 거리
                 </p>
               </div>
               {/* 네이버 지도 임베드 */}
-              <div className="mt-6 rounded-lg overflow-hidden shadow-md">
+              <div 
+                className="mt-6 rounded-lg overflow-hidden shadow-md"
+                data-aos="fade-up"
+                data-aos-delay="250"
+                data-aos-duration="600"
+              >
                 <iframe
                   src="https://naver.me/FhfREQzF"
                   width="100%"

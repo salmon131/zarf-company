@@ -436,7 +436,7 @@ export default async function HomePage() {
             <div className="flex items-center justify-between mb-12" data-aos="fade-up">
               <div>
                 <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
-            투자 스터디 & 커뮤니티
+            투자 스터디 & 세미나
           </h2>
                 <p className="text-sm md:text-base text-gray-700 font-semibold">함께 배우고 성장하는 투자 커뮤니티</p>
               </div>

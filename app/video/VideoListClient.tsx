@@ -83,13 +83,21 @@ export default function VideoListClient({
   }, [videos, selectedCategory, sortOption]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FFF8F0]">
       {/* 헤더 그라데이션 섹션 */}
-      <div className="bg-gradient-to-b from-brand-50 to-white py-12">
-        <div className="container mx-auto px-4">
+      <div className="relative py-12 overflow-hidden">
+        {/* 장식 요소 - 큰 원형 글로우 */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           {/* Hero Section */}
           <section className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-display font-bold leading-[1.2] relative mb-4">
+            <h1 
+              className="text-4xl md:text-5xl font-display font-bold leading-[1.2] relative mb-4"
+              data-aos="fade-up"
+              data-aos-duration="600"
+            >
               <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
                 실전 투자 채널
               </span>
@@ -98,12 +106,22 @@ export default function VideoListClient({
                 실전 투자 채널
               </span>
             </h1>
-            <p className="text-lg text-gray-700 mb-8">
+            <p 
+              className="text-lg text-gray-700 mb-8"
+              data-aos="fade-up"
+              data-aos-delay="100"
+              data-aos-duration="600"
+            >
               탱자프 대표의 투자 노하우와 최신 트렌드를 담은 재밌고 유익한 주식투자 영상
             </p>
             
             {/* 유튜브 구독 CTA 섹션 */}
-            <div className="max-w-2xl mx-auto bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-8 shadow-lg">
+            <div 
+              className="max-w-2xl mx-auto bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-8 shadow-lg"
+              data-aos="fade-up"
+              data-aos-delay="200"
+              data-aos-duration="600"
+            >
               <div className="flex items-center justify-center gap-3 mb-4">
                 <svg className="w-12 h-12 text-red-600" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
@@ -134,10 +152,14 @@ export default function VideoListClient({
         </div>
       </div>
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 relative z-10">
         {/* Category Tabs */}
         <section className="mb-6">
-          <div className="flex gap-6 justify-center mb-6 border-b border-gray-200">
+          <div 
+            className="flex gap-6 justify-center mb-6 border-b border-gray-200"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             {categories.map((category) => (
               <button
                 key={category}
@@ -197,11 +219,14 @@ export default function VideoListClient({
         <section className="mb-12">
           {selectedCategory === "재생목록" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {playlists.map((playlist) => (
+              {playlists.map((playlist, index) => (
                 <Link
                   key={playlist.id}
                   href={`/video/playlist/${playlist.id}`}
                   className="block group"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 50}
+                  data-aos-duration="600"
                 >
                   <Card hover className="h-full overflow-hidden border-0 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl shadow-md">
                     <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-4 relative overflow-hidden">
@@ -250,17 +275,23 @@ export default function VideoListClient({
             </div>
           ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {filteredVideos.map((video) => (
-              <VideoCard
+            {filteredVideos.map((video, index) => (
+              <div
                 key={video.slug}
-                title={video.title}
-                thumbnailUrl={video.thumbnailUrl}
-                views={video.views}
-                duration={video.duration}
-                href={video.href}
-                category={video.category}
-                publishedAt={video.publishedAt}
-              />
+                data-aos="fade-up"
+                data-aos-delay={index * 50}
+                data-aos-duration="600"
+              >
+                <VideoCard
+                  title={video.title}
+                  thumbnailUrl={video.thumbnailUrl}
+                  views={video.views}
+                  duration={video.duration}
+                  href={video.href}
+                  category={video.category}
+                  publishedAt={video.publishedAt}
+                />
+              </div>
             ))}
           </div>
           )}
@@ -269,13 +300,26 @@ export default function VideoListClient({
         {/* Top 10 Section - 재생목록일 때는 숨김 */}
         {selectedCategory !== "재생목록" && (
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">인기 영상 TOP 10</h2>
+          <h2 
+            className="text-2xl font-bold text-gray-900 mb-6"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
+            인기 영상 TOP 10
+          </h2>
           <div className="space-y-4">
             {videos
               .sort((a, b) => b.views - a.views)
               .slice(0, 10)
               .map((video, index) => (
-                <Card key={video.slug} hover className="p-4">
+                <Card 
+                  key={video.slug} 
+                  hover 
+                  className="p-4"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 50}
+                  data-aos-duration="600"
+                >
                   <div className="flex items-center gap-4">
                     <div className="text-2xl font-bold text-brand-500 w-12 text-center">
                       {index + 1}

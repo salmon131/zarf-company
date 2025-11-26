@@ -5,17 +5,12 @@ import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
 
   return (
-    <footer className={`${isHomePage ? "bg-gradient-to-b from-[#FFF8F0] to-[#FFF4E6]" : "bg-white"} relative overflow-hidden mt-auto pb-16 md:pb-8`}>
+    <footer className="bg-gradient-to-b from-[#FFF8F0] to-[#FFF4E6] relative overflow-hidden mt-auto pb-16 md:pb-8">
       {/* 장식 요소 */}
-      {isHomePage && (
-        <>
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yellow-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-yellow-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
-        </>
-      )}
       
       <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
