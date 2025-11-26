@@ -134,6 +134,7 @@ export default function CommunityPage() {
                 "/images/community/studies/stock-study-2025/3.jpg",
                 "/images/community/studies/stock-study-2025/4.jpg",
                 "/images/community/studies/stock-study-2025/5.jpg",
+                "/images/community/studies/stock-study-2025/6.jpg",
               ]}
               autoSlideInterval={3000}
             />

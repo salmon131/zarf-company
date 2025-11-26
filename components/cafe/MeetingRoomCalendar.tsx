@@ -328,14 +328,16 @@ export default function MeetingRoomCalendar() {
     const cellRect = targetCell.getBoundingClientRect();
     
     // 분 단위 오프셋 계산 (셀 내에서의 위치)
+    // 셀 높이는 64px (h-16), 분당 높이는 64/60 = 약 1.067px
     const minuteOffset = (minute / 60) * 64; // 셀 높이(64px) 기준으로 분 계산
     
-    // 블록 너비 계산
+    // 블록 너비 계산 (드래그된 블록과 동일한 방식)
     const columnWidthPercent = 100 / 8;
     const containerWidth = containerRect.width;
     const blockWidthPx = (columnWidthPercent / 100) * containerWidth - 10;
     
     // absolute 위치이므로 컨테이너 기준 상대 위치 반환
+    // 스크롤 위치는 absolute 위치에서 자동으로 처리됨
     return {
       x: cellRect.left - containerRect.left, // 블록의 왼쪽 끝 위치 (컨테이너 기준, 픽셀)
       y: cellRect.top - containerRect.top + minuteOffset, // 블록의 상단 위치 (컨테이너 기준, 픽셀) + 분 오프셋
@@ -432,8 +434,6 @@ export default function MeetingRoomCalendar() {
     
     setIsDragging(false);
     
-    let finalEndTime = dragEnd;
-    
     // 클릭만 한 경우 (드래그 없음) - 기본 1시간 블록 생성
     if (!hasDragged && dragStart) {
         let endHour = dragStart.hour + 1;
@@ -454,46 +454,11 @@ export default function MeetingRoomCalendar() {
         return;
       }
       
-      finalEndTime = { date: dragStart.date, hour: endHour, minute: endMinute };
-      setDragEnd(finalEndTime);
-      setSelectedStartTime(dragStart);
-      setSelectedEndTime(finalEndTime);
-    } else if (hasDragged && dragEnd) {
-      // 드래그가 발생한 경우 - dragEnd를 그대로 사용
-      const startMinutes = dragStart.hour * 60 + dragStart.minute;
-      const endMinutes = dragEnd.hour * 60 + dragEnd.minute;
-      const durationMinutes = endMinutes - startMinutes;
-      
-      // 최소 15분 블록 보장 (15분 미만인 경우에만)
-      if (durationMinutes > 0 && durationMinutes < 15) {
-        finalEndTime = {
-          date: dragStart.date,
-          hour: dragStart.hour,
-          minute: dragStart.minute + 15
-        };
-        // 60분 넘어가면 시간 증가
-        if (finalEndTime.minute >= 60) {
-          finalEndTime.hour += 1;
-          finalEndTime.minute -= 60;
-        }
-        setDragEnd(finalEndTime);
-      } else {
-        // 15분 이상이면 dragEnd를 그대로 사용
-        finalEndTime = dragEnd;
-      }
-      
-      // 드래그로 만든 블록의 시간을 그대로 사용
-      setSelectedStartTime(dragStart);
-      setSelectedEndTime(finalEndTime);
-    } else if (dragStart) {
-      // dragEnd가 없으면 기본 1시간 블록 생성
-      const endHour = dragStart.hour + 1;
-      const endMinute = dragStart.minute;
-      const defaultEndTime = { date: dragStart.date, hour: endHour, minute: endMinute };
-      setSelectedStartTime(dragStart);
-      setSelectedEndTime(defaultEndTime);
-      setDragEnd(defaultEndTime);
+      const endTime = { date: dragStart.date, hour: endHour, minute: endMinute };
+      setDragEnd(endTime);
+      setSelectedEndTime(endTime);
     }
+    // 드래그가 발생한 경우 dragEnd를 그대로 사용 (이미 handleTimeSlotMouseMove에서 설정됨)
     
     // 모달 위치 계산 - 선택된 블록의 좌측 상단에 배치
     const blockPosition = getBlockTopLeftPosition(
@@ -504,10 +469,10 @@ export default function MeetingRoomCalendar() {
     
     if (blockPosition) {
       setModalPosition(blockPosition);
-    } else {
+      } else {
       // 위치 계산 실패 시 기본 위치
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
       if (lastMousePos.current) {
         setModalPosition({
           x: lastMousePos.current.x + scrollLeft,
@@ -629,10 +594,14 @@ export default function MeetingRoomCalendar() {
 
   // 요일 반복 선택 핸들러
   const handleDayToggle = (dayIndex: number) => {
+    // 월요일=0 기준: 월=0, 화=1, 수=2, 목=3, 금=4, 토=5, 일=6
+    const dayLabels = ['월', '화', '수', '목', '금', '토', '일'];
+    console.log(`요일 선택: ${dayLabels[dayIndex]}요일 (인덱스: ${dayIndex}, 월요일=0 기준)`);
     setBookingData((prev) => {
       const newDays = prev.recurringDaysOfWeek.includes(dayIndex)
         ? prev.recurringDaysOfWeek.filter(d => d !== dayIndex)
         : [...prev.recurringDaysOfWeek, dayIndex];
+      console.log(`선택된 요일들: [${newDays.map(d => dayLabels[d]).join(', ')}] (인덱스: [${newDays.join(', ')}])`);
       return {
         ...prev,
         recurringDaysOfWeek: newDays
@@ -654,7 +623,9 @@ export default function MeetingRoomCalendar() {
     
     // 반복 예약인 경우 1건만 저장 (관리자 승인 시 자동으로 반복 생성됨)
     const baseDate = new Date(selectedStartTime.date);
-    const selectedDayOfWeek = baseDate.getDay(); // 0=일요일, 1=월요일, ..., 6=토요일
+    const jsDayOfWeek = baseDate.getDay(); // JavaScript getDay(): 0=일요일, 1=월요일, ..., 6=토요일
+    // 월요일=0 기준으로 변환: 월=0, 화=1, 수=2, 목=3, 금=4, 토=5, 일=6
+    const selectedDayOfWeek = jsDayOfWeek === 0 ? 6 : jsDayOfWeek - 1;
     
     // 반복 예약인 경우 요일 선택이 없으면 선택된 날짜의 요일을 기본값으로 사용
     const recurringDays = bookingData.isRecurring 
@@ -662,6 +633,20 @@ export default function MeetingRoomCalendar() {
           ? bookingData.recurringDaysOfWeek 
           : [selectedDayOfWeek])
       : [];
+    
+    // 디버깅: 저장되는 요일 값 확인
+    if (bookingData.isRecurring) {
+      // 월요일=0 기준: 월=0, 화=1, 수=2, 목=3, 금=4, 토=5, 일=6
+      const dayLabels = ['월', '화', '수', '목', '금', '토', '일'];
+      console.log('🔍 예약 요청 - 반복 요일 디버깅:', {
+        '선택된 날짜': selectedStartTime.date,
+        'JavaScript getDay()': jsDayOfWeek,
+        '변환된 요일 (월=0 기준)': `${dayLabels[selectedDayOfWeek]}요일 (${selectedDayOfWeek})`,
+        '사용자가 선택한 요일들 (recurringDaysOfWeek)': bookingData.recurringDaysOfWeek.map(d => `${dayLabels[d]}요일 (${d})`).join(', '),
+        '최종 저장될 요일들 (recurringDays)': recurringDays.map(d => `${dayLabels[d]}요일 (${d})`).join(', '),
+        'recurringDays 배열': recurringDays
+      });
+    }
     
     // 3개월 후 날짜 계산 (반복 종료일)
     const endDate = new Date(baseDate);
@@ -690,23 +675,23 @@ export default function MeetingRoomCalendar() {
       return;
     }
     
-    setBookings((prev) => [...prev, createdBooking]);
-    
+      setBookings((prev) => [...prev, createdBooking]);
+      
     if (bookingData.isRecurring) {
       alert('3개월간 반복 예약 요청이 생성되었습니다. 관리자 승인 후 자동으로 반복 등록됩니다.');
     } else {
       alert('예약 요청이 생성되었습니다. 관리자 승인 후 등록됩니다.');
     }
-    
-    setTimeout(() => {
-      setShowBookingForm(false);
-      setSelectedStartTime(null);
-      setSelectedEndTime(null);
-      setDragStart(null);
-      setDragEnd(null);
+      
+      setTimeout(() => {
+        setShowBookingForm(false);
+        setSelectedStartTime(null);
+        setSelectedEndTime(null);
+        setDragStart(null);
+        setDragEnd(null);
       setBookingData({ name: "", phone: "", purpose: "", isRecurring: false, recurringDaysOfWeek: [] });
-      setModalPosition(null);
-    }, 500);
+        setModalPosition(null);
+      }, 500);
   };
 
   // 전역 마우스 이벤트 처리
@@ -1123,95 +1108,95 @@ export default function MeetingRoomCalendar() {
               </div>
               
               {/* 예약 폼 - 블록의 좌측/우측 상단에 배치 (블록을 가리지 않음) */}
-              {showBookingForm && selectedStartTime && selectedEndTime && modalPosition && (
-                <div 
-                  className="absolute pointer-events-auto w-96 z-50"
-                  style={{
+      {showBookingForm && selectedStartTime && selectedEndTime && modalPosition && (
+          <div 
+          className="absolute pointer-events-auto w-96 z-50"
+            style={{
                     // 월, 화요일(dayIndex 0, 1)은 모달을 블록의 오른쪽에 배치
                     // 그 외의 경우는 모달을 블록의 왼쪽에 배치
                     // 여백을 32px로 증가시켜 블록과의 거리를 더 띄움
                     left: modalPosition.dayIndex <= 1
-                      ? `${modalPosition.x + modalPosition.blockWidth + 32}px` // 블록 오른쪽 + 여백 32px
-                      : `${modalPosition.x - 416}px`, // 블록 왼쪽 (모달 너비 384px + 여백 32px)
-                    // 블록의 상단에 정확히 맞춤
-                    top: `${modalPosition.y}px`,
-                  }}
-                >
-                  <Card className="p-6 bg-white shadow-2xl border-2 border-brand-500">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-bold text-gray-900">
-                        회의실 예약 요청
-                      </h3>
-                      <button
-                        onClick={() => {
-                          setShowBookingForm(false);
-                          setSelectedStartTime(null);
-                          setSelectedEndTime(null);
-                          setDragStart(null);
-                          setDragEnd(null);
+                      ? `${Math.max(20, modalPosition.x + modalPosition.blockWidth + 32)}px` // 블록 오른쪽 + 여백 32px (최소 20px)
+                      : `${Math.max(20, modalPosition.x - 416)}px`, // 블록 왼쪽 (모달 너비 384px + 여백 32px, 최소 20px)
+                    // 블록의 상단에 정확히 맞춤 (최소 20px)
+                    top: `${Math.max(20, modalPosition.y)}px`,
+            }}
+          >
+            <Card className="p-6 bg-white shadow-2xl border-2 border-brand-500">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-gray-900">
+                  회의실 예약 요청
+                </h3>
+                <button
+                  onClick={() => {
+                    setShowBookingForm(false);
+                    setSelectedStartTime(null);
+                    setSelectedEndTime(null);
+                    setDragStart(null);
+                    setDragEnd(null);
                           setBookingData({ name: "", phone: "", purpose: "", isRecurring: false, recurringDaysOfWeek: [] });
-                          setModalPosition(null);
-                        }}
-                        className="text-gray-500 hover:text-gray-700"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
-                    <p className="text-gray-700 mb-4 text-sm font-semibold bg-brand-50 p-2 rounded">
-                      {selectedStartTime.date} {formatTime(selectedStartTime.hour, selectedStartTime.minute)} ~ {formatTime(selectedEndTime.hour, selectedEndTime.minute)}
-                    </p>
+                    setModalPosition(null);
+                  }}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <p className="text-gray-700 mb-4 text-sm font-semibold bg-brand-50 p-2 rounded">
+                {selectedStartTime.date} {formatTime(selectedStartTime.hour, selectedStartTime.minute)} ~ {formatTime(selectedEndTime.hour, selectedEndTime.minute)}
+              </p>
 
-                    <form onSubmit={handleBookingSubmit} className="space-y-4">
-                      <div>
-                        <label htmlFor="booking-name" className="block text-sm font-medium text-gray-700 mb-2">
-                          이름 <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="booking-name"
-                          name="name"
-                          value={bookingData.name}
-                          onChange={handleBookingInputChange}
-                          required
-                          placeholder="이름을 입력해주세요"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
-                        />
-                      </div>
+              <form onSubmit={handleBookingSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="booking-name" className="block text-sm font-medium text-gray-700 mb-2">
+                    이름 <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="booking-name"
+                    name="name"
+                    value={bookingData.name}
+                    onChange={handleBookingInputChange}
+                    required
+                    placeholder="이름을 입력해주세요"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  />
+                </div>
 
-                      {/* 이메일 필드 제거됨 */}
+                {/* 이메일 필드 제거됨 */}
 
-                      <div>
-                        <label htmlFor="booking-phone" className="block text-sm font-medium text-gray-700 mb-2">
-                          연락처 <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          id="booking-phone"
-                          name="phone"
-                          value={bookingData.phone}
-                          onChange={handleBookingInputChange}
-                          required
-                          placeholder="연락 가능한 전화번호를 입력해주세요"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
-                        />
-                      </div>
+                <div>
+                  <label htmlFor="booking-phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    연락처 <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="booking-phone"
+                    name="phone"
+                    value={bookingData.phone}
+                    onChange={handleBookingInputChange}
+                    required
+                    placeholder="연락 가능한 전화번호를 입력해주세요"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  />
+                </div>
 
-                      <div>
-                        <label htmlFor="booking-purpose" className="block text-sm font-medium text-gray-700 mb-2">
-                          사용 목적
-                        </label>
-                        <textarea
-                          id="booking-purpose"
-                          name="purpose"
-                          value={bookingData.purpose}
-                          onChange={handleBookingInputChange}
-                          rows={3}
-                          placeholder="회의실 사용 목적을 간단히 적어주세요"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
-                        />
-                      </div>
+                <div>
+                  <label htmlFor="booking-purpose" className="block text-sm font-medium text-gray-700 mb-2">
+                    사용 목적
+                  </label>
+                  <textarea
+                    id="booking-purpose"
+                    name="purpose"
+                    value={bookingData.purpose}
+                    onChange={handleBookingInputChange}
+                    rows={3}
+                    placeholder="회의실 사용 목적을 간단히 적어주세요"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
+                  />
+                </div>
 
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
@@ -1237,27 +1222,34 @@ export default function MeetingRoomCalendar() {
                             </label>
                             <div className="flex gap-2">
                               {[
-                                { label: '월', index: 1 },
-                                { label: '화', index: 2 },
-                                { label: '수', index: 3 },
-                                { label: '목', index: 4 },
-                                { label: '금', index: 5 },
-                                { label: '토', index: 6 },
-                                { label: '일', index: 0 },
-                              ].map(({ label, index }) => (
-                                <button
-                                  key={index}
-                                  type="button"
-                                  onClick={() => handleDayToggle(index)}
-                                  className={`flex-1 px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                                    bookingData.recurringDaysOfWeek.includes(index)
-                                      ? 'bg-brand-500 text-white'
-                                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
-                                  }`}
-                                >
-                                  {label}
-                                </button>
-                              ))}
+                                { label: '월', index: 0 }, // 월요일 = 0
+                                { label: '화', index: 1 }, // 화요일 = 1
+                                { label: '수', index: 2 }, // 수요일 = 2
+                                { label: '목', index: 3 }, // 목요일 = 3
+                                { label: '금', index: 4 }, // 금요일 = 4
+                                { label: '토', index: 5 }, // 토요일 = 5
+                                { label: '일', index: 6 }, // 일요일 = 6
+                              ].map(({ label, index }) => {
+                                const isSelected = bookingData.recurringDaysOfWeek.includes(index);
+                                return (
+                                  <button
+                                    key={index}
+                                    type="button"
+                                    onClick={() => {
+                                      console.log(`요일 버튼 클릭: ${label}요일, 인덱스: ${index}`);
+                                      handleDayToggle(index);
+                                    }}
+                                    className={`flex-1 px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                                      isSelected
+                                        ? 'bg-brand-500 text-white'
+                                        : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
+                                    }`}
+                                    title={`${label}요일 (인덱스: ${index})`}
+                                  >
+                                    {label}
+                                  </button>
+                                );
+                              })}
                             </div>
                             {bookingData.recurringDaysOfWeek.length === 0 && (
                               <p className="text-xs text-gray-500 mt-2">
@@ -1268,33 +1260,33 @@ export default function MeetingRoomCalendar() {
                         )}
                       </div>
 
-                      <div className="flex gap-2 pt-2">
-                        <Button
-                          type="button"
-                          onClick={() => {
-                            setShowBookingForm(false);
-                            setSelectedStartTime(null);
-                            setSelectedEndTime(null);
-                            setDragStart(null);
-                            setDragEnd(null);
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setShowBookingForm(false);
+                      setSelectedStartTime(null);
+                      setSelectedEndTime(null);
+                      setDragStart(null);
+                      setDragEnd(null);
                             setBookingData({ name: "", phone: "", purpose: "", isRecurring: false, recurringDaysOfWeek: [] });
-                            setModalPosition(null);
-                          }}
-                          variant="outline"
-                          className="flex-1"
-                        >
-                          취소
-                        </Button>
-                        <Button type="submit" variant="primary" className="flex-1">
-                          예약 요청
-                        </Button>
-                      </div>
-                    </form>
-                  </Card>
+                      setModalPosition(null);
+                    }}
+                    variant="outline"
+                    className="flex-1"
+                  >
+                    취소
+                  </Button>
+                  <Button type="submit" variant="primary" className="flex-1">
+                    예약 요청
+                  </Button>
                 </div>
-              )}
-            </div>
+              </form>
+            </Card>
           </div>
+      )}
+            </div>
+              </div>
         </Card>
       )}
 
@@ -1307,7 +1299,7 @@ export default function MeetingRoomCalendar() {
                 <div className="text-sm font-semibold text-gray-600">{day}</div>
               </div>
             ))}
-          </div>
+              </div>
           <div className="grid grid-cols-7">
             {monthSchedule.map((day) => {
               const dayBookings = bookings.filter(
@@ -1328,7 +1320,7 @@ export default function MeetingRoomCalendar() {
                     }`}
                   >
                     {day.day}
-                  </div>
+              </div>
                   <div className="space-y-1">
                     {dayBookings.slice(0, 3).map((booking) => {
                       const isPending = booking.status === "pending";
@@ -1341,17 +1333,17 @@ export default function MeetingRoomCalendar() {
                           className={`${bgColor} ${opacity} text-white text-xs rounded px-1 py-0.5 truncate`}
                       >
                           {booking.startTime} {booking.title || booking.name} {isPending && "(대기)"}
-                      </div>
+              </div>
                       );
                     })}
                     {dayBookings.length > 3 && (
                       <div className="text-xs text-gray-500">+{dayBookings.length - 3}개</div>
                     )}
-                  </div>
-                </div>
+            </div>
+          </div>
               );
             })}
-          </div>
+        </div>
         </Card>
       )}
 
