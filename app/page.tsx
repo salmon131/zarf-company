@@ -111,18 +111,20 @@ export default async function HomePage() {
   return (
     <main className="bg-[#FFF8F0] min-h-screen">
       {/* 배너 이미지 (헤더 바로 아래, 전체 너비) */}
-      <ChannelBanner />
+      <div data-aos="fade-down">
+        <ChannelBanner />
+      </div>
       
       {/* Hero Section - 크림/베이지 톤 */}
       <section className="relative min-h-screen flex flex-col pt-16 md:pt-12 pb-32 md:pb-40 text-center overflow-hidden bg-[#FFF8F0]">
         {/* 장식 요소 - 큰 원형 글로우 */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
         
         <div className="container mx-auto px-4 relative z-10 flex-1 flex flex-col">
           <div className="max-w-7xl mx-auto flex-1 flex flex-col">
             {/* 브랜드 카피라이트 - 현대적인 웹 UI 스타일 */}
-            <div className="mt-8 md:mt-12 mb-16 md:mb-20 relative">
+            <div className="mt-8 md:mt-12 mb-16 md:mb-20 relative" data-aos="fade-up">
               <h1 className="text-3xl md:text-5xl font-display font-bold leading-[1.2] relative max-w-7xl mx-auto">
                 <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
                 주식, 만화로 배우는 실전 투자전략
@@ -135,7 +137,7 @@ export default async function HomePage() {
         </div>
 
             {/* 설명 섹션 - 현대적인 간격과 레이아웃 */}
-            <div className="max-w-3xl mx-auto mb-16 md:mb-20">
+            <div className="max-w-3xl mx-auto mb-16 md:mb-20" data-aos="fade-up" data-aos-delay="100">
               <p className="text-lg md:text-xl text-gray-700 font-bold leading-relaxed">
                 <span className="text-orange-600 animate-shimmer-glow">
                   <CountUpNumber target={218} duration={2000} className="inline text-orange-600" /> 이상의 수익률
@@ -145,7 +147,7 @@ export default async function HomePage() {
               </p>
             </div>
             {/* CTA 버튼 섹션 */}
-            <div className="mt-12 md:mt-16 mb-8 md:mb-12 flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="mt-12 md:mt-16 mb-8 md:mb-12 flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
               <Button 
                 href="/comic"
                 variant="primary" 
@@ -171,7 +173,7 @@ export default async function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-brand-500 to-brand-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Button>
               <Button 
-                href="/cafe/seminar" 
+                href="/community/seminar" 
                 variant="outline" 
                 size="lg" 
                 className="!bg-white/90 !backdrop-blur-sm !border-2 !border-brand-500 !text-brand-600 hover:!bg-brand-50 hover:!border-brand-600 !rounded-2xl !px-8 !py-4 !shadow-lg hover:!shadow-xl hover:!scale-105 transform transition-all duration-300 font-bold text-base tracking-wide"
@@ -190,11 +192,11 @@ export default async function HomePage() {
       {/* 투자철학 섹션 */}
       <section className="pt-20 md:pt-24 pb-20 md:pb-24 bg-[#FFF8F0] relative overflow-hidden">
         {/* 장식 요소 */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex items-center justify-between mb-12">
+          <div className="flex items-center justify-between mb-12" data-aos="fade-up">
             <div>
               <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
                 탱자프의 투자철학
@@ -205,59 +207,65 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {/* 실적 카드 */}
-            <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-brand-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
+            <div data-aos="fade-up" data-aos-delay="100" data-aos-duration="800" data-aos-easing="ease-in-out">
+              <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-brand-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-brand-600">25%</h3>
+                    <p className="text-gray-700 font-semibold text-sm">연평균 수익률</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-brand-600">25%</h3>
-                  <p className="text-gray-700 font-semibold text-sm">연평균 수익률</p>
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm">최근 5년간의 검증된 실적</p>
-            </Card>
+                <p className="text-gray-600 text-sm">최근 5년간의 검증된 실적</p>
+              </Card>
+            </div>
 
             {/* 분석 방식 카드 */}
-            <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
+            <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="800" data-aos-easing="ease-in-out">
+              <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">퀀트 분석</h3>
+                    <p className="text-gray-700 font-semibold text-sm">AI 기반</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900">퀀트 분석</h3>
-                  <p className="text-gray-700 font-semibold text-sm">AI 기반</p>
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm">Fwd EPS & RSI 모멘텀</p>
-            </Card>
+                <p className="text-gray-600 text-sm">Fwd EPS & RSI 모멘텀</p>
+              </Card>
+            </div>
 
             {/* 투자 스타일 카드 */}
-            <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+            <div data-aos="fade-up" data-aos-delay="300" data-aos-duration="800" data-aos-easing="ease-in-out">
+              <Card className="bg-white/70 backdrop-blur-sm p-6 border-0 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">유연한 전략</h3>
+                    <p className="text-gray-700 font-semibold text-sm">장기+단기</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900">유연한 전략</h3>
-                  <p className="text-gray-700 font-semibold text-sm">장기+단기</p>
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm">모멘텀 대응 매매</p>
-            </Card>
+                <p className="text-gray-600 text-sm">모멘텀 대응 매매</p>
+              </Card>
+            </div>
           </div>
 
           {/* 상세 설명 */}
-          <Card className="bg-white/70 backdrop-blur-sm p-8 border-0 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <Card className="bg-white/70 backdrop-blur-sm p-8 border-0 shadow-md hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="400">
               <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="flex gap-4" data-aos="fade-right" data-aos-delay="500" data-aos-anchor-placement="top-bottom">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg" data-aos="zoom-in" data-aos-delay="550">
                     <span className="text-white font-bold text-lg">1</span>
                   </div>
                   <div className="flex-1">
@@ -268,8 +276,8 @@ export default async function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="flex gap-4" data-aos="fade-right" data-aos-delay="600" data-aos-anchor-placement="top-bottom">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg" data-aos="zoom-in" data-aos-delay="650">
                     <span className="text-white font-bold text-lg">2</span>
                   </div>
                   <div className="flex-1">
@@ -280,8 +288,8 @@ export default async function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="flex gap-4" data-aos="fade-right" data-aos-delay="700" data-aos-anchor-placement="top-bottom">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center shadow-lg" data-aos="zoom-in" data-aos-delay="750">
                     <span className="text-white font-bold text-lg">3</span>
                   </div>
                   <div className="flex-1">
@@ -293,9 +301,9 @@ export default async function HomePage() {
                 </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <div className="bg-gradient-to-r from-brand-50 to-orange-50 border-l-4 border-brand-500 rounded-lg p-6">
-                <svg className="w-10 h-10 text-brand-400 mb-3" fill="currentColor" viewBox="0 0 24 24">
+            <div className="mt-8 pt-6 border-t border-gray-200" data-aos="fade-up" data-aos-delay="800" data-aos-anchor-placement="top-bottom">
+              <div className="bg-gradient-to-r from-brand-50 to-orange-50 border-l-4 border-brand-500 rounded-lg p-6" data-aos="fade-in" data-aos-delay="850">
+                <svg className="w-10 h-10 text-brand-400 mb-3" fill="currentColor" viewBox="0 0 24 24" data-aos="zoom-in" data-aos-delay="900">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
                 <p className="text-gray-800 text-base md:text-lg leading-relaxed font-semibold mb-4">
@@ -310,11 +318,11 @@ export default async function HomePage() {
       {/* Video Highlight Section - 크림/베이지 톤 */}
       <section className="pt-12 md:pt-16 pb-20 md:pb-24 bg-[#FFF8F0] relative overflow-hidden">
         {/* 장식 요소 */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-yellow-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-50" data-aos="fade-in" data-aos-duration="2000"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-yellow-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-50" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex items-center justify-between mb-12">
+          <div className="flex items-center justify-between mb-12" data-aos="fade-up">
             <div>
               <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
               인기 영상
@@ -324,6 +332,7 @@ export default async function HomePage() {
             <Link
               href="/video"
               className="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-500 to-orange-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+              data-aos="fade-left"
             >
               전체 영상 보기
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -333,7 +342,7 @@ export default async function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {popularVideos.map((video, index) => (
-              <div key={index} className="group">
+              <div key={index} className="group" data-aos="fade-up" data-aos-delay={index * 100}>
             <VideoCard
                   title={video.title}
                   views={video.views}
@@ -351,13 +360,13 @@ export default async function HomePage() {
       {/* Café & Community Combined Section - 크림/베이지 톤 */}
       <section className="pt-20 md:pt-24 pb-20 md:pb-24 bg-[#FFF8F0] relative overflow-hidden">
         {/* 장식 요소 - 통합된 글로우 */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-yellow-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-60" data-aos="fade-in" data-aos-duration="2000" data-aos-delay="200"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           {/* 카페 & 세미나 섹션 */}
           <div className="mb-28 md:mb-32">
-            <div className="flex items-center justify-between mb-12">
+            <div className="flex items-center justify-between mb-12" data-aos="fade-up">
               <div>
                 <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
               카페 & 세미나
@@ -365,8 +374,9 @@ export default async function HomePage() {
                 <p className="text-sm md:text-base text-gray-700 font-semibold">오프라인에서 만나는 투자 커뮤니티</p>
               </div>
             <Link
-            href="/cafe/seminar"
+            href="/community/seminar"
                 className="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-500 to-orange-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                data-aos="fade-left"
             >
                 세미나 일정 보기
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -375,43 +385,45 @@ export default async function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Card className="p-8 bg-white/70 backdrop-blur-sm border-0 shadow-md hover:shadow-2xl transition-all duration-300">
-                <div className="space-y-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center text-2xl shadow-lg">
-                      🏠
+              <div data-aos="fade-right" data-aos-delay="100" data-aos-duration="800" data-aos-easing="ease-in-out">
+                <Card className="p-8 bg-white/70 backdrop-blur-sm border-0 shadow-md hover:shadow-2xl transition-all duration-300">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-brand-400 to-orange-400 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+                        🏠
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-900">
+                        투자자들의 아지트
+                      </h3>
                     </div>
-              <h3 className="text-2xl font-bold text-gray-900">
-                투자자들의 아지트
-              </h3>
+                    <p className="text-gray-800 leading-relaxed text-base md:text-lg font-semibold">
+                      '카페탱'에서 만나는 투자 커뮤니티. 오프라인 세미나와
+                      스터디를 통해 실전 투자 감각을 키워보세요.
+                    </p>
+                    <Button href="/cafe" variant="primary" className="shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                      카페 소개 보기
+                    </Button>
                   </div>
-                  <p className="text-gray-800 leading-relaxed text-base md:text-lg font-semibold">
-                '카페탱'에서 만나는 투자 커뮤니티. 오프라인 세미나와
-                스터디를 통해 실전 투자 감각을 키워보세요.
-              </p>
-                  <Button href="/cafe" variant="primary" className="shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-                카페 소개 보기
-              </Button>
-            </div>
-              </Card>
+                </Card>
+              </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="transform hover:-translate-y-2 transition-all duration-300">
+                <div className="transform hover:-translate-y-2 transition-all duration-300" data-aos="fade-left" data-aos-delay="100">
               <SeminarCard
                 title="주식 투자 입문 세미나"
                 date="2024.12.15"
                 instructor="김투자"
                 description="처음 시작하는 주식 투자자를 위한 기초 강의"
-                href="/cafe/seminar/stock-basics"
+                href="/community/seminar/stock-basics"
                 price="무료"
               />
                 </div>
-                <div className="transform hover:-translate-y-2 transition-all duration-300">
+                <div className="transform hover:-translate-y-2 transition-all duration-300" data-aos="fade-left" data-aos-delay="200">
               <SeminarCard
                 title="ETF 투자 전략"
                 date="2024.12.22"
                 instructor="이ETF"
                 description="ETF를 활용한 안정적인 투자 전략"
-                href="/cafe/seminar/etf-strategy"
+                href="/community/seminar/etf-strategy"
                 price="30,000원"
               />
             </div>
@@ -421,7 +433,7 @@ export default async function HomePage() {
 
       {/* Community Section */}
           <div className="mt-28 md:mt-32">
-            <div className="flex items-center justify-between mb-12">
+            <div className="flex items-center justify-between mb-12" data-aos="fade-up">
               <div>
                 <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
             투자 스터디 & 커뮤니티
@@ -431,6 +443,7 @@ export default async function HomePage() {
               <Link
                 href="/community"
                 className="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-500 to-orange-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                data-aos="fade-left"
               >
                 커뮤니티 보기
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -438,11 +451,11 @@ export default async function HomePage() {
                 </svg>
               </Link>
             </div>
-            <p className="text-base md:text-lg text-gray-800 mb-8 max-w-3xl leading-relaxed font-semibold">
+            <p className="text-base md:text-lg text-gray-800 mb-8 max-w-3xl leading-relaxed font-semibold" data-aos="fade-up" data-aos-delay="100">
             함께 배우고 성장하는 투자 커뮤니티에 참여해보세요. 온라인과
             오프라인에서 만나는 다양한 스터디와 이벤트를 만나보실 수 있습니다.
           </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="200">
               <Button 
                 href="/community" 
                 variant="primary" 
@@ -467,61 +480,64 @@ export default async function HomePage() {
       {/* Comic Highlight Section - 크림/베이지 톤 */}
       <section className="pt-20 md:pt-24 pb-20 md:pb-24 bg-[#FFF8F0] relative overflow-hidden">
         {/* 장식 요소 */}
-        <div className="absolute top-10 left-10 w-96 h-96 bg-yellow-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
+        <div className="absolute top-10 left-10 w-96 h-96 bg-yellow-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-40" data-aos="fade-in" data-aos-duration="2000"></div>
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-12">
+          <div className="flex items-center justify-between mb-12" data-aos="fade-up">
             <div>
               <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
-                주식만화 세계관
+                만화 세계관
               </h2>
-              <p className="text-sm md:text-base text-gray-700 font-semibold">만화로 쉽게 배우는 투자 이야기</p>
+              <p className="text-sm md:text-base text-gray-700 font-semibold">재미있고 유익한 만화 콘텐츠로 만나는 새로운 경험</p>
             </div>
             <Link
               href="/comic"
               className="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-500 to-orange-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+              data-aos="fade-left"
             >
-              세계관 보기
+              만화 보기
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="p-8 group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-white/70 backdrop-blur-sm shadow-md hover:shadow-xl">
-              <div className="w-16 h-16 bg-gradient-to-br from-brand-400 to-orange-400 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+            <Card className="p-8 group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-white/70 backdrop-blur-sm shadow-md hover:shadow-xl" data-aos="fade-up" data-aos-delay="100">
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-400 to-orange-400 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="150">
                 📚
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                시리즈 소개
+              <h3 className="text-xl font-bold text-gray-900 mb-3" data-aos="fade-up" data-aos-delay="120">
+                만화 시리즈
               </h3>
-              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed font-semibold">
-                다양한 주식 투자 이야기를 만화로 만나보세요
+              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed font-semibold" data-aos="fade-up" data-aos-delay="140">
+                탱자프 컴퍼니의 다양한 만화 시리즈를 만나보세요. 
               </p>
               <Link
                 href="/comic"
                 className="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 font-semibold text-sm group-hover:gap-3 transition-all"
+                data-aos="fade-up" data-aos-delay="160"
               >
-                자세히 보기
+                시리즈 보기
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </Card>
-            <Card className="p-8 group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-white/70 backdrop-blur-sm shadow-md hover:shadow-xl">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-400 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
-                🔔
+            <Card className="p-8 group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-white/70 backdrop-blur-sm shadow-md hover:shadow-xl" data-aos="fade-up" data-aos-delay="200">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center mb-6 text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="250">
+                🎨
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                복귀 알림
+              <h3 className="text-xl font-bold text-gray-900 mb-3" data-aos="fade-up" data-aos-delay="220">
+                작가 모집
               </h3>
-              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed font-semibold">
-                새로운 에피소드 업데이트 알림을 받아보세요
+              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed font-semibold" data-aos="fade-up" data-aos-delay="240">
+                탱자프 컴퍼니와 함께 성장할 만화 작가를 모집하고 있습니다. 
               </p>
               <Link
                 href="/comic"
                 className="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 font-semibold text-sm group-hover:gap-3 transition-all"
+                data-aos="fade-up" data-aos-delay="260"
               >
-                알림 신청
+                지원하기
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>

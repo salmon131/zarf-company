@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BottomTabBar from "@/components/layout/BottomTabBar";
 import FontLoader from "@/components/layout/FontLoader";
+import AOSProvider from "@/components/layout/AOSProvider";
 import StructuredData from "@/components/layout/StructuredData";
 
 const gowunBatang = Gowun_Batang({
@@ -109,6 +110,7 @@ export default function RootLayout({
       </head>
       <body className={`${gowunBatang.variable} font-sans antialiased`}>
         <FontLoader />
+        <AOSProvider />
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-1">{children}</main>

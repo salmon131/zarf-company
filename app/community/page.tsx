@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import EventCard from "@/components/community/EventCard";
+import SeminarCard from "@/components/cafe/SeminarCard";
 import Card from "@/components/ui/Card";
 
 export default function CommunityPage() {
@@ -63,6 +64,40 @@ export default function CommunityPage() {
                 스터디 일정 보기
               </Button>
             </Card>
+          </div>
+        </section>
+
+        {/* Seminar Section */}
+        <section className="mb-16">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">세미나 일정</h2>
+              <p className="text-gray-600">다양한 투자 주제의 세미나를 만나보세요</p>
+            </div>
+            <Link
+              href="/community/seminar"
+              className="text-brand-500 hover:text-brand-600 font-medium"
+            >
+              전체 보기 →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <SeminarCard
+              title="주식 투자 입문 세미나"
+              date="2024.12.15"
+              instructor="김투자"
+              description="처음 시작하는 주식 투자자를 위한 기초 강의"
+              href="/community/seminar/stock-basics"
+              price="무료"
+            />
+            <SeminarCard
+              title="ETF 투자 전략"
+              date="2024.12.22"
+              instructor="이ETF"
+              description="ETF를 활용한 안정적인 투자 전략"
+              href="/community/seminar/etf-strategy"
+              price="30,000원"
+            />
           </div>
         </section>
 
