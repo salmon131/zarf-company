@@ -66,14 +66,20 @@ export default function StudyCard({
             <span>{deadline}</span>
           </div>
         )}
-        {capacity && (
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <span className="font-medium">
-              {status === "ongoing" ? "참여 인원:" : "모집 인원:"}
-            </span>
-            <span>{capacity}</span>
-          </div>
-        )}
+        {capacity && (() => {
+          const isMinimum = capacity.startsWith("최소");
+          const capacityValue = isMinimum ? capacity.replace("최소 ", "") : capacity;
+          const label = isMinimum 
+            ? "최소 인원:" 
+            : (status === "ongoing" ? "참여 인원:" : "모집 인원:");
+          
+          return (
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <span className="font-medium">{label}</span>
+              <span>{capacityValue}</span>
+            </div>
+          );
+        })()}
       </div>
     </Card>
   );
