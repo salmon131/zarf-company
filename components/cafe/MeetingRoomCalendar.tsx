@@ -78,6 +78,14 @@ export default function MeetingRoomCalendar() {
     setIsLoading(false);
   };
   
+  // 날짜를 로컬 시간대로 포맷하는 헬퍼 함수 (타임존 문제 방지)
+  const formatLocalDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   // 예약 블록 클릭 핸들러 (관리 기능 제거 - 클릭 시 아무 동작 없음)
   const handleBookingClick = (booking: Booking, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -88,7 +96,7 @@ export default function MeetingRoomCalendar() {
   const [currentTime, setCurrentTime] = useState(() => {
     const now = new Date();
     return {
-      date: now.toISOString().split("T")[0],
+      date: formatLocalDate(now),
       hour: now.getHours(),
       minute: now.getMinutes(),
       second: now.getSeconds(),
@@ -100,7 +108,7 @@ export default function MeetingRoomCalendar() {
     const interval = setInterval(() => {
       const now = new Date();
       setCurrentTime({
-        date: now.toISOString().split("T")[0],
+        date: formatLocalDate(now),
         hour: now.getHours(),
         minute: now.getMinutes(),
         second: now.getSeconds(),
@@ -128,8 +136,9 @@ export default function MeetingRoomCalendar() {
       const date = new Date(startOfWeek);
       date.setDate(startOfWeek.getDate() + i);
       
-      const dateStr = date.toISOString().split("T")[0];
-      const isToday = dateStr === today.toISOString().split("T")[0];
+      const dateStr = formatLocalDate(date);
+      const todayStr = formatLocalDate(today);
+      const isToday = dateStr === todayStr;
       
       // 시간대별 예약 정보 생성 (9시 ~ 24시, 30분 단위)
       const slots: TimeSlot[] = [];
@@ -190,8 +199,9 @@ export default function MeetingRoomCalendar() {
     const prevMonthLastDay = new Date(year, month, 0).getDate();
     for (let i = startingDayOfWeek - 1; i >= 0; i--) {
       const date = new Date(year, month - 1, prevMonthLastDay - i);
-      const dateStr = date.toISOString().split("T")[0];
-      const isToday = dateStr === today.toISOString().split("T")[0];
+      const dateStr = formatLocalDate(date);
+      const todayStr = formatLocalDate(today);
+      const isToday = dateStr === todayStr;
       
       schedule.push({
         date: dateStr,
@@ -207,8 +217,9 @@ export default function MeetingRoomCalendar() {
     // 현재 달의 날들
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
-      const dateStr = date.toISOString().split("T")[0];
-      const isToday = dateStr === today.toISOString().split("T")[0];
+      const dateStr = formatLocalDate(date);
+      const todayStr = formatLocalDate(today);
+      const isToday = dateStr === todayStr;
       
       schedule.push({
         date: dateStr,
@@ -225,8 +236,9 @@ export default function MeetingRoomCalendar() {
     const remainingDays = 42 - schedule.length;
     for (let day = 1; day <= remainingDays; day++) {
       const date = new Date(year, month + 1, day);
-      const dateStr = date.toISOString().split("T")[0];
-      const isToday = dateStr === today.toISOString().split("T")[0];
+      const dateStr = formatLocalDate(date);
+      const todayStr = formatLocalDate(today);
+      const isToday = dateStr === todayStr;
       
       schedule.push({
         date: dateStr,
@@ -622,7 +634,9 @@ export default function MeetingRoomCalendar() {
     const endTimeStr = formatTime(selectedEndTime.hour, selectedEndTime.minute);
     
     // 반복 예약인 경우 1건만 저장 (관리자 승인 시 자동으로 반복 생성됨)
-    const baseDate = new Date(selectedStartTime.date);
+    // 날짜 문자열을 직접 파싱하여 타임존 문제 방지
+    const [year, month, day] = selectedStartTime.date.split('-').map(Number);
+    let baseDate = new Date(year, month - 1, day);
     const jsDayOfWeek = baseDate.getDay(); // JavaScript getDay(): 0=일요일, 1=월요일, ..., 6=토요일
     // 월요일=0 기준으로 변환: 월=0, 화=1, 수=2, 목=3, 금=4, 토=5, 일=6
     const selectedDayOfWeek = jsDayOfWeek === 0 ? 6 : jsDayOfWeek - 1;
@@ -634,14 +648,85 @@ export default function MeetingRoomCalendar() {
           : [selectedDayOfWeek])
       : [];
     
+    // 날짜를 로컬 시간대로 포맷하는 헬퍼 함수 (타임존 문제 방지)
+    const formatLocalDate = (date: Date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+    
+    // 반복 예약인 경우: 선택한 날짜가 속한 주의 반복 요일 중 가장 첫 번째 날짜를 시작일로 계산
+    if (bookingData.isRecurring && recurringDays.length > 0) {
+      const dayLabels = ['월', '화', '수', '목', '금', '토', '일'];
+      
+      // 1. 선택한 날짜가 속한 주의 시작일(월요일)과 종료일(일요일) 계산
+      // 날짜 문자열을 직접 파싱하여 타임존 문제 방지
+      const [selectedYear, selectedMonth, selectedDay] = selectedStartTime.date.split('-').map(Number);
+      const selectedDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
+      const selectedJsDayOfWeek = selectedDate.getDay(); // JavaScript getDay(): 0=일요일, 1=월요일, ..., 6=토요일
+      
+      // 월요일로 조정 (월요일 = 주의 시작일)
+      // 토요일(6) -> 월요일(1): 6 - 1 = 5일 전
+      // 일요일(0) -> 월요일(1): 6일 전
+      const daysFromMonday = selectedJsDayOfWeek === 0 ? 6 : selectedJsDayOfWeek - 1;
+      const weekStartDate = new Date(selectedDate);
+      weekStartDate.setDate(selectedDate.getDate() - daysFromMonday);
+      weekStartDate.setHours(0, 0, 0, 0);
+      
+      // 일요일 계산 (주의 종료일)
+      const weekEndDate = new Date(weekStartDate);
+      weekEndDate.setDate(weekStartDate.getDate() + 6);
+      weekEndDate.setHours(23, 59, 59, 999);
+      
+      // 2. 그 주 안에서 반복 요일에 해당하는 날짜들 찾기
+      const recurringDatesInWeek: { date: Date; dayIndex: number }[] = [];
+      const checkDate = new Date(weekStartDate);
+      
+      for (let i = 0; i < 7; i++) {
+        const checkJsDayOfWeek = checkDate.getDay();
+        const checkDayIndex = checkJsDayOfWeek === 0 ? 6 : checkJsDayOfWeek - 1; // 월=0 기준으로 변환
+        
+        if (recurringDays.includes(checkDayIndex)) {
+          recurringDatesInWeek.push({
+            date: new Date(checkDate),
+            dayIndex: checkDayIndex
+          });
+        }
+        
+        checkDate.setDate(checkDate.getDate() + 1);
+      }
+      
+      // 3. 가장 첫 번째 날짜를 시작일로 설정
+      if (recurringDatesInWeek.length > 0) {
+        const firstRecurringDate = recurringDatesInWeek[0].date;
+        baseDate = firstRecurringDate;
+        
+        const startJsDayOfWeek = baseDate.getDay();
+        const startDayIndex = startJsDayOfWeek === 0 ? 6 : startJsDayOfWeek - 1;
+        
+        console.log('🔍 반복 예약 시작일 계산:', {
+          '선택된 날짜': selectedStartTime.date,
+          '선택된 날짜 요일': `${dayLabels[selectedDayOfWeek]}요일 (${selectedDayOfWeek})`,
+          '주의 시작일 (월요일)': formatLocalDate(weekStartDate),
+          '주의 종료일 (일요일)': formatLocalDate(weekEndDate),
+          '반복 요일': recurringDays.map(d => `${dayLabels[d]}요일 (${d})`).join(', '),
+          '주의 반복 요일 날짜들': recurringDatesInWeek.map(d => `${formatLocalDate(d.date)} (${dayLabels[d.dayIndex]}요일)`).join(', '),
+          '계산된 시작일': formatLocalDate(baseDate),
+          '시작일 요일': `${dayLabels[startDayIndex]}요일 (${startDayIndex})`
+        });
+      }
+    }
+    
     // 디버깅: 저장되는 요일 값 확인
     if (bookingData.isRecurring) {
       // 월요일=0 기준: 월=0, 화=1, 수=2, 목=3, 금=4, 토=5, 일=6
       const dayLabels = ['월', '화', '수', '목', '금', '토', '일'];
+      const finalJsDayOfWeek = baseDate.getDay();
+      const finalDayOfWeek = finalJsDayOfWeek === 0 ? 6 : finalJsDayOfWeek - 1;
       console.log('🔍 예약 요청 - 반복 요일 디버깅:', {
-        '선택된 날짜': selectedStartTime.date,
-        'JavaScript getDay()': jsDayOfWeek,
-        '변환된 요일 (월=0 기준)': `${dayLabels[selectedDayOfWeek]}요일 (${selectedDayOfWeek})`,
+        '최종 시작일': formatLocalDate(baseDate),
+        '최종 시작일 요일': `${dayLabels[finalDayOfWeek]}요일 (${finalDayOfWeek})`,
         '사용자가 선택한 요일들 (recurringDaysOfWeek)': bookingData.recurringDaysOfWeek.map(d => `${dayLabels[d]}요일 (${d})`).join(', '),
         '최종 저장될 요일들 (recurringDays)': recurringDays.map(d => `${dayLabels[d]}요일 (${d})`).join(', '),
         'recurringDays 배열': recurringDays
@@ -651,11 +736,11 @@ export default function MeetingRoomCalendar() {
     // 3개월 후 날짜 계산 (반복 종료일)
     const endDate = new Date(baseDate);
     endDate.setMonth(endDate.getMonth() + 3);
-    const recurringEndDate = bookingData.isRecurring ? endDate.toISOString().split('T')[0] : null;
+    const recurringEndDate = bookingData.isRecurring ? formatLocalDate(endDate) : null;
     
     // 예약 데이터 생성 (반복 예약 정보 포함)
     const newBookingData: any = {
-      date: selectedStartTime.date,
+      date: formatLocalDate(baseDate), // 계산된 시작일 사용 (로컬 시간대)
       startTime: startTimeStr,
       endTime: endTimeStr,
       name: bookingData.name,
@@ -1258,7 +1343,7 @@ export default function MeetingRoomCalendar() {
                             )}
                           </div>
                         )}
-                      </div>
+                </div>
 
                 <div className="flex gap-2 pt-2">
                   <Button
