@@ -1,7 +1,5 @@
-import Card from "@/components/ui/Card";
-
 interface CafeCardProps {
-  title: string;
+  title?: string;
   description?: string;
   imageUrl?: string;
   address?: string;
@@ -18,41 +16,44 @@ export default function CafeCard({
   phone,
 }: CafeCardProps) {
   return (
-    <Card className="h-full">
+    <div>
       {imageUrl && (
         <div className="aspect-video bg-gray-100 rounded-lg mb-4 overflow-hidden">
           <img
             src={imageUrl}
-            alt={title}
+            alt={title || "카페"}
             className="w-full h-full object-cover"
           />
         </div>
       )}
-      <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
+      {title && (
+        <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
+      )}
       {description && (
-        <p className="text-gray-600 mb-4">{description}</p>
+        <p className="text-gray-600 leading-relaxed mb-4">{description}</p>
       )}
       <div className="space-y-2 text-sm">
         {address && (
-          <div className="flex items-start">
-            <span className="text-gray-500 w-20">주소</span>
+          <div className="flex items-start gap-3">
+            <span className="text-gray-500 font-medium shrink-0 w-20">주소</span>
             <span className="text-gray-700">{address}</span>
           </div>
         )}
         {hours && (
-          <div className="flex items-start">
-            <span className="text-gray-500 w-20">운영시간</span>
+          <div className="flex items-start gap-3">
+            <span className="text-gray-500 font-medium shrink-0 w-20">운영시간</span>
             <span className="text-gray-700">{hours}</span>
           </div>
         )}
         {phone && (
-          <div className="flex items-start">
-            <span className="text-gray-500 w-20">전화</span>
-            <span className="text-gray-700">{phone}</span>
+          <div className="flex items-start gap-3">
+            <span className="text-gray-500 font-medium shrink-0 w-20">전화</span>
+            <a href={`tel:${phone}`} className="text-brand-600 font-medium hover:text-brand-700 transition-colors">
+              {phone}
+            </a>
           </div>
         )}
       </div>
-    </Card>
+    </div>
   );
 }
-

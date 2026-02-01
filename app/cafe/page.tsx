@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import CafeCard from "@/components/cafe/CafeCard";
 import Button from "@/components/ui/Button";
-import Card from "@/components/ui/Card";
-import MeetingRoomCalendar from "@/components/cafe/MeetingRoomCalendar";
 
 export default function CafePage() {
   const [showRentalInquiry, setShowRentalInquiry] = useState(false);
@@ -75,7 +72,7 @@ export default function CafePage() {
         
         <div className="container mx-auto px-4 relative z-10">
           {/* Hero Section */}
-          <section className="text-center mb-16">
+          <section className="text-left mb-16">
             <h1 
               className="text-4xl md:text-5xl font-display font-bold mb-4 leading-[1.2] relative"
               data-aos="fade-up"
@@ -103,16 +100,19 @@ export default function CafePage() {
       
       <div className="container mx-auto px-4 py-12">
 
-        {/* About Section */}
+        {/* About Section - 카페 소개 */}
         <section className="mb-16">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6" data-aos="fade-up" data-aos-duration="600">
+            카페탱
+          </h2>
           <div data-aos="fade-up" data-aos-duration="600">
             <CafeCard
-            title="카페탱"
-            description="탱자프 사무실 바깥 공간에 마련한 카페입니다. 편하게 쉬고, 작업하고, 공부할 수 있도록 만들어진 공간입니다. 적지 않은 종류의 만화책과 유익한 책들도 준비되어있습니다. 회의실은 무료이며 2시간 이내, 3인 이상(과외, 스터디 등) 모임에 한해 사용할 수 있습니다."
-            address="서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱"
-            hours="매일 09:00 - 01:00"
-            phone="010-4026-7291"
-          />
+              title=""
+              description="탱자프 사무실 바깥 공간에 마련한 카페입니다. 편하게 쉬고, 작업하고, 공부할 수 있도록 만들어진 공간입니다. 적지 않은 종류의 만화책과 유익한 책들도 준비되어있습니다."
+              address="서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱"
+              hours="매일 09:00 - 23:00"
+              phone="010-4026-7291"
+            />
           </div>
         </section>
 
@@ -123,7 +123,7 @@ export default function CafePage() {
             data-aos="fade-up"
             data-aos-duration="600"
           >
-            {["공부", "만화", "회의실", "무인카페", "하루종일", "자유롭게"].map((tag, index) => (
+            {["공부", "만화", "무인카페", "하루종일", "자유롭게"].map((tag, index) => (
               <span
                 key={index}
                 className="text-gray-700 hover:text-brand-600 transition-all duration-300 font-bold text-base md:text-lg px-3 py-2 rounded-lg hover:bg-brand-50/50 relative group cursor-default"
@@ -133,11 +133,11 @@ export default function CafePage() {
               </span>
             ))}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card 
-                key={i} 
-                className="p-0 overflow-hidden group hover:shadow-xl transition-shadow duration-300"
+              <div
+                key={i}
+                className="rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-lg shadow-gray-200/40 ring-1 ring-gray-200/50 transition-all duration-300 hover:shadow-xl hover:ring-brand-200/50 group"
                 data-aos="fade-up"
                 data-aos-delay={i * 50}
                 data-aos-duration="600"
@@ -147,38 +147,153 @@ export default function CafePage() {
                     src={`/images/cafe/cafe-${i}.jpg`}
                     alt={`카페 사진 ${i}`}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* Meeting Room Section */}
+        {/* Meeting Room Section - 스터디룸 6인실 */}
         <section className="mb-16">
+          <div
+            className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
+            <h2 className="text-2xl font-bold text-gray-900">
+              스터디룸 6인실
+            </h2>
+            <span
+              className="text-xl sm:text-2xl font-bold text-brand-600 tabular-nums animate-fade-in-right"
+              data-aos="fade-left"
+              data-aos-duration="600"
+              data-aos-delay="200"
+            >
+              5,000원 / 1시간
+            </span>
+          </div>
+          <p className="text-gray-600 text-sm mb-6 -mt-2" data-aos="fade-up" data-aos-duration="600">
+              <a
+                href="#naver-place"
+                className="text-brand-600 font-medium underline underline-offset-2 hover:text-brand-700 transition-colors"
+              >
+                네이버 예약
+              </a>
+              으로 대여 가능합니다
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+            <div
+              className="rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-lg shadow-gray-200/40 ring-1 ring-gray-200/50 transition-all duration-300 hover:shadow-xl hover:ring-brand-200/50 group"
+              data-aos="fade-up"
+              data-aos-duration="600"
+            >
+              <div
+                className="bg-gray-100 relative overflow-hidden"
+                style={{ aspectRatio: "16 / 11" }}
+              >
+                <Image
+                  src="/images/cafe/meeting-1.jpg"
+                  alt="회의실 전경"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+            <div
+              className="rounded-2xl overflow-hidden border border-gray-200/80 bg-white shadow-lg shadow-gray-200/40 ring-1 ring-gray-200/50 transition-all duration-300 hover:shadow-xl hover:ring-brand-200/50 group"
+              data-aos="fade-up"
+              data-aos-delay={50}
+              data-aos-duration="600"
+            >
+              <div
+                className="bg-gray-100 relative overflow-hidden"
+                style={{ aspectRatio: "16 / 11" }}
+              >
+                <Image
+                  src="/images/cafe/meeting-2.jpg"
+                  alt="회의실 내부"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 스터디룸 세부사항 */}
+          <div className="mt-8" data-aos="fade-up" data-aos-delay={100} data-aos-duration="600">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0 border-t border-gray-200">
+              <div className="border-b md:border-b-0 md:border-r border-gray-200 py-5 pr-6 pl-0">
+                <span className="inline-block text-2xl font-bold text-brand-500/90 tabular-nums mb-2">01</span>
+                <p className="text-sm font-semibold text-gray-800 mb-1">최대인원</p>
+                <p className="text-gray-600 text-sm">6명</p>
+              </div>
+              <div className="border-b md:border-b-0 md:border-r border-gray-200 py-5 px-6 pl-0 md:pl-6">
+                <span className="inline-block text-2xl font-bold text-brand-500/90 tabular-nums mb-2">02</span>
+                <p className="text-sm font-semibold text-gray-800 mb-3">룸 내 시설</p>
+                <ul className="space-y-1.5 text-gray-600 text-sm">
+                  <li>Wi-Fi</li>
+                  <li>칠판 (보드마카, 지우개)</li>
+                  <li>모니터 (노트북 연결 가능)</li>
+                  <li>콘센트, 난방</li>
+                </ul>
+              </div>
+              <div className="py-5 pl-0 md:pl-6">
+                <span className="inline-block text-2xl font-bold text-brand-500/90 tabular-nums mb-2">03</span>
+                <p className="text-sm font-semibold text-gray-800 mb-3">편의시설</p>
+                <ul className="space-y-1.5 text-gray-600 text-sm">
+                  <li>프린터기 (인쇄/복사), 커피자판기</li>
+                  <li>회의실 바깥 카페 공간</li>
+                  <li>전자레인지 (간편음식 섭취 가능)</li>
+                  <li>냉장고 (개인 음료·음식 보관 가능)</li>
+                  <li>여자·남자 화장실 구분</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 오시는 길 Section - 네이버 플레이스 */}
+        <section id="naver-place" className="mb-16 scroll-mt-6">
           <div 
-            className="text-center mb-8"
+            className="mb-8"
             data-aos="fade-up"
             data-aos-duration="600"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              회의실 사용 시간표
+              오시는 길
             </h2>
-            <p className="text-gray-700 text-lg">
-              무료로 회의실을 예약하고 사용할 수 있어요
+            <p className="text-gray-700 text-lg mb-6">
+              서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱
             </p>
           </div>
-          <div data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
-            <MeetingRoomCalendar />
+          <div 
+            className="rounded-lg overflow-hidden shadow-md"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="600"
+          >
+            <iframe
+              src="https://naver.me/FhfREQzF"
+              width="100%"
+              height="680"
+              frameBorder="0"
+              style={{ border: 0 }}
+              allowFullScreen
+              className="w-full"
+              title="네이버 지도"
+            />
           </div>
         </section>
 
-        {/* Rental Inquiry Section */}
+        {/* 대관 문의 Section - 오시는 길 아래 */}
         <section className="mb-16">
-          <Card 
-            className="p-8 bg-brand-50"
+          <div
+            className="rounded-2xl border border-gray-200/80 bg-gradient-to-br from-white via-brand-50/30 to-orange-50/20 p-8 shadow-lg shadow-gray-200/50 backdrop-blur-sm"
             data-aos="fade-up"
             data-aos-duration="600"
           >
@@ -211,10 +326,9 @@ export default function CafePage() {
                       onChange={handleRentalInputChange}
                       required
                       placeholder="이름을 입력해주세요"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white/80 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow"
                     />
                   </div>
-                  
                   <div>
                     <label htmlFor="rental-email" className="block text-sm font-medium text-gray-700 mb-2">
                       이메일 <span className="text-red-500">*</span>
@@ -227,10 +341,9 @@ export default function CafePage() {
                       onChange={handleRentalInputChange}
                       required
                       placeholder="이메일 주소를 입력해주세요"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white/80 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow"
                     />
                   </div>
-                  
                   <div>
                     <label htmlFor="rental-phone" className="block text-sm font-medium text-gray-700 mb-2">
                       연락처 <span className="text-red-500">*</span>
@@ -243,10 +356,9 @@ export default function CafePage() {
                       onChange={handleRentalInputChange}
                       required
                       placeholder="연락 가능한 전화번호를 입력해주세요"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white/80 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow"
                     />
                   </div>
-                  
                   <div>
                     <label htmlFor="rental-purpose" className="block text-sm font-medium text-gray-700 mb-2">
                       대관 목적 <span className="text-red-500">*</span>
@@ -257,7 +369,7 @@ export default function CafePage() {
                       value={rentalFormData.purpose}
                       onChange={handleRentalInputChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white/80 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow"
                     >
                       <option value="">선택해주세요</option>
                       <option value="스터디">스터디</option>
@@ -266,7 +378,6 @@ export default function CafePage() {
                       <option value="기타">기타</option>
                     </select>
                   </div>
-                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="rental-date" className="block text-sm font-medium text-gray-700 mb-2">
@@ -279,10 +390,9 @@ export default function CafePage() {
                         value={rentalFormData.date}
                         onChange={handleRentalInputChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white/80 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow"
                       />
                     </div>
-                    
                     <div>
                       <label htmlFor="rental-time" className="block text-sm font-medium text-gray-700 mb-2">
                         희망 시간 <span className="text-red-500">*</span>
@@ -294,11 +404,10 @@ export default function CafePage() {
                         value={rentalFormData.time}
                         onChange={handleRentalInputChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white/80 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow"
                       />
                     </div>
                   </div>
-                  
                   <div>
                     <label htmlFor="rental-message" className="block text-sm font-medium text-gray-700 mb-2">
                       문의 내용
@@ -310,33 +419,29 @@ export default function CafePage() {
                       onChange={handleRentalInputChange}
                       rows={4}
                       placeholder="대관에 대한 자세한 내용을 남겨주세요"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white/80 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow resize-none"
                     />
                   </div>
-                  
-                  {/* 성공/에러 메시지 */}
                   {rentalSubmitStatus === "success" && (
-                    <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl shadow-sm">
+                    <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/80 rounded-xl shadow-sm">
                       <p className="text-green-700 text-sm font-medium flex items-center gap-2">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
                         문의가 성공적으로 접수되었습니다! 빠른 시일 내에 연락드리겠습니다.
                       </p>
                     </div>
                   )}
-                  
                   {rentalSubmitStatus === "error" && (
-                    <div className="p-4 bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 rounded-xl shadow-sm">
+                    <div className="p-4 bg-gradient-to-r from-red-50 to-rose-50 border border-red-200/80 rounded-xl shadow-sm">
                       <p className="text-red-700 text-sm font-medium flex items-center gap-2">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                         </svg>
                         오류가 발생했습니다. 다시 시도해주세요.
                       </p>
                     </div>
                   )}
-                  
                   <div className="flex gap-4 pt-4">
                     <Button
                       type="button"
@@ -362,42 +467,7 @@ export default function CafePage() {
                 </form>
               )}
             </div>
-          </Card>
-        </section>
-
-        {/* 오시는 길 Section */}
-        <section className="mb-16">
-          <div 
-            className="text-center mb-8"
-            data-aos="fade-up"
-            data-aos-duration="600"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              오시는 길
-            </h2>
-            <p className="text-gray-700 text-lg mb-6">
-              서울 강동구 고덕로 97(암사동 447-24) 2층 카페탱
-            </p>
           </div>
-          <Card 
-            className="p-0 overflow-hidden"
-            data-aos="fade-up"
-            data-aos-delay="100"
-            data-aos-duration="600"
-          >
-            <div className="rounded-lg overflow-hidden shadow-md">
-              <iframe
-                src="https://naver.me/FhfREQzF"
-                width="100%"
-                height="500"
-                frameBorder="0"
-                style={{ border: 0 }}
-                allowFullScreen
-                className="w-full"
-                title="네이버 지도"
-              ></iframe>
-            </div>
-          </Card>
         </section>
       </div>
     </div>
