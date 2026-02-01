@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Gowun_Batang } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -7,13 +6,6 @@ import BottomTabBar from "@/components/layout/BottomTabBar";
 import FontLoader from "@/components/layout/FontLoader";
 import AOSProvider from "@/components/layout/AOSProvider";
 import StructuredData from "@/components/layout/StructuredData";
-
-const gowunBatang = Gowun_Batang({
-  variable: "--font-gowun-batang",
-  subsets: ["latin"],
-  weight: ["400"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tangzarf.com'),
@@ -94,6 +86,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        {/* Google Fonts - 빌드 시 fetch 없이 런타임 로드로 Vercel 빌드 안정화 */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400&display=swap" />
         {/* Google Search Console 인증 */}
         <meta name="google-site-verification" content="U5zxIV81KL7Xps6ckWZ2jxjASYZiJ7X4aOt-hX6v5VI" />
         <link rel="icon" href="/icon.png" type="image/png" />
@@ -108,7 +104,7 @@ export default function RootLayout({
         <meta name="geo.region" content="KR" />
         <StructuredData />
       </head>
-      <body className={`${gowunBatang.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         <FontLoader />
         <AOSProvider />
         <div className="flex flex-col min-h-screen">

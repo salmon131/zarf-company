@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Gowun Batang: layout에서 link로 로드, 빌드 시 fetch 없음 */
+  --font-gowun-batang: "Gowun Batang", serif;
 }
 
 @theme inline {
