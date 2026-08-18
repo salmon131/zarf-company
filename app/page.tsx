@@ -156,7 +156,7 @@ export default function HomePage() {
             </div>
 
             {/* center — the big display headline */}
-            <div className="relative col-span-12 md:col-span-6">
+            <div className="relative col-span-12 flex flex-col items-center text-center md:col-span-6">
               <Steam />
               <h1
                 className="font-display text-[16vw] leading-[0.86] tracking-[-0.04em] text-ink md:text-[10.5rem]"
@@ -168,12 +168,9 @@ export default function HomePage() {
                 </span>
                 <span className="text-ink">.</span>
               </h1>
-              <div className="mt-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-                <p className="font-hangul-serif text-lg leading-snug text-ink-soft md:max-w-md">
-                  “읽고, 쓰고, 머무는 사람들을 위한 조용한 북카페.”
-                </p>
-                <p className="eyebrow text-ink-mute">Vol. 01 · Slow Hours</p>
-              </div>
+              <p className="mt-6 max-w-md font-hangul-serif text-lg leading-snug text-ink-soft">
+                “읽고, 쓰고, 머무는 사람들을 위한 조용한 북카페.”
+              </p>
             </div>
 
             {/* right — seal + open hours ticker */}
