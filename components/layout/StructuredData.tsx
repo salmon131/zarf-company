@@ -5,7 +5,7 @@ export default function StructuredData() {
     "name": "CafeTang",
     "alternateName": "카페탱",
     "url": "https://tangzarf.com",
-    "description": "편하게 쉬고, 작업하고, 공부할 수 있는 서울 강동구 카공 & 만화 카페 CafeTang.",
+    "description": "편하게 쉬고, 작업하고, 공부할 수 있는 서울 강동구 카공 & 북카페 CafeTang.",
     "inLanguage": "ko-KR",
     "publisher": {
       "@type": "Organization",
@@ -24,7 +24,7 @@ export default function StructuredData() {
     "alternateName": "카페탱",
     "url": "https://tangzarf.com",
     "image": "https://tangzarf.com/images/logo.png",
-    "description": "편하게 쉬고, 작업하고, 공부할 수 있는 카공 & 만화 카페",
+    "description": "편하게 쉬고, 작업하고, 공부할 수 있는 카공 & 북카페",
     "telephone": "0507-1304-7291",
     "address": {
       "@type": "PostalAddress",
