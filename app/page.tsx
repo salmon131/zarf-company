@@ -110,6 +110,25 @@ export default function HomePage() {
 
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden">
+        {/* Warm radial glows — same recipe as the OG image */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-[10%] -top-[20%] h-[720px] w-[720px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(255,187,51,0.45), transparent 70%)",
+            filter: "blur(24px)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-[20%] -left-[12%] h-[720px] w-[720px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(193,68,14,0.22), transparent 70%)",
+            filter: "blur(24px)",
+          }}
+        />
         <div className="relative mx-auto max-w-[1400px] px-5 pt-14 pb-16 md:px-10 md:pt-20 md:pb-24">
           <div className="grid grid-cols-12 gap-x-4 gap-y-10">
             {/* left column — eyebrow + tiny meta */}
