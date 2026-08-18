@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next'
- 
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: '탱자프 - 만화로 배우는 투자',
-    short_name: '탱자프',
-    description: '탱자프 대표의 투자 노하우와 최신 트렌드를 담은 재밌고 유익한 주식투자 만화와 영상',
+    name: 'CafeTang - 카공 & 만화 카페',
+    short_name: 'CafeTang',
+    description: '편하게 쉬고, 작업하고, 공부할 수 있는 서울 강동구 카공 & 만화 카페 CafeTang.',
     start_url: '/',
     display: 'standalone',
     background_color: '#FFF8F0',
@@ -28,4 +28,3 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
   }
 }
-

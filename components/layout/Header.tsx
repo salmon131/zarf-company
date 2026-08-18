@@ -1,103 +1,87 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import Button from "@/components/ui/Button";
+import { useEffect, useState } from "react";
+
+function useNow() {
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => {
+    setNow(new Date());
+    const id = setInterval(() => setNow(new Date()), 60_000);
+    return () => clearInterval(id);
+  }, []);
+  return now;
+}
+
+function isOpenNow(d: Date) {
+  const m = d.getHours() * 60 + d.getMinutes();
+  return m >= 9 * 60 && m < 22 * 60;
+}
 
 export default function Header() {
-  const pathname = usePathname();
+  const now = useNow();
+  const open = now ? isOpenNow(now) : true;
+  const time =
+    now?.toLocaleTimeString("ko-KR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }) ?? "";
 
   return (
-    <header className="bg-[#FFF8F0]/95 backdrop-blur-md border-b border-brand-200/30 sticky top-0 z-50 shadow-sm">
-      <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-14 md:h-20">
-          {/* 로고 - 모바일/데스크톱 모두 표시 */}
-          <Link 
-            href="/" 
-            className="flex items-center gap-1 text-xl md:text-3xl font-display font-bold bg-gradient-to-r from-brand-600 via-brand-500 to-orange-500 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
+    <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper/85 backdrop-blur-md">
+      <div className="mx-auto grid h-14 max-w-[1400px] grid-cols-3 items-center px-5 md:h-16 md:px-10">
+        {/* Left — Open Now indicator */}
+        <div className="flex items-center justify-start">
+          <span
+            className={`hidden items-center gap-2 text-xs sm:inline-flex ${
+              open ? "text-[color:var(--seal)]" : "text-ink-mute"
+            }`}
           >
-            <Image
-              src="/images/logo.png"
-              alt="Zarf Company 로고"
-              width={32}
-              height={32}
-              className="w-7 h-7 md:w-10 md:h-10"
-              priority
-              unoptimized
-            />
-            <span>Zarf Company</span>
+            <span
+              className={`relative inline-block h-1.5 w-1.5 rounded-full ${
+                open ? "bg-[color:var(--seal)]" : "bg-ink-mute"
+              }`}
+            >
+              {open && (
+                <span className="absolute inset-0 -m-1 animate-ping rounded-full bg-[color:var(--seal)]/40" />
+              )}
+            </span>
+            <span className="eyebrow">{open ? "Open Now" : "Closed"}</span>
+            {time && <span className="num text-ink-mute">· {time}</span>}
+          </span>
+        </div>
+
+        {/* Center — Logo */}
+        <div className="flex items-center justify-center">
+          <Link href="/" className="group flex items-center gap-2.5">
+            <span
+              aria-hidden
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-ink/60 text-[10px] tracking-[0.2em] text-ink transition-transform duration-500 group-hover:rotate-[360deg]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              C
+            </span>
+            <span
+              className="text-xl md:text-2xl font-display font-medium leading-none text-ink"
+              style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100' }}
+            >
+              CafeTang
+            </span>
           </Link>
-          
-          {/* 데스크톱 네비게이션 - 모바일에서는 숨김 */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link
-              href="/comic"
-              className={`text-gray-700 hover:text-brand-600 transition-all duration-300 font-bold text-lg px-3 py-2 rounded-lg hover:bg-brand-50/50 relative group ${
-                pathname.startsWith("/comic") ? "text-brand-600" : ""
-              }`}
-            >
-              만화
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 transition-all duration-300 ${
-                pathname.startsWith("/comic") ? "w-full" : "w-0 group-hover:w-full"
-              }`}></span>
-            </Link>
-            <Link
-              href="/video"
-              className={`text-gray-700 hover:text-brand-600 transition-all duration-300 font-bold text-lg px-3 py-2 rounded-lg hover:bg-brand-50/50 relative group ${
-                pathname.startsWith("/video") ? "text-brand-600" : ""
-              }`}
-            >
-              영상
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 transition-all duration-300 ${
-                pathname.startsWith("/video") ? "w-full" : "w-0 group-hover:w-full"
-              }`}></span>
-            </Link>
-            <Link
-              href="/cafe"
-              className={`text-gray-700 hover:text-brand-600 transition-all duration-300 font-bold text-lg px-3 py-2 rounded-lg hover:bg-brand-50/50 relative group ${
-                pathname.startsWith("/cafe") ? "text-brand-600" : ""
-              }`}
-            >
-              카페
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 transition-all duration-300 ${
-                pathname.startsWith("/cafe") ? "w-full" : "w-0 group-hover:w-full"
-              }`}></span>
-            </Link>
-            <Link
-              href="/community"
-              className={`text-gray-700 hover:text-brand-600 transition-all duration-300 font-bold text-lg px-3 py-2 rounded-lg hover:bg-brand-50/50 relative group ${
-                pathname.startsWith("/community") ? "text-brand-600" : ""
-              }`}
-            >
-              커뮤니티
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 transition-all duration-300 ${
-                pathname.startsWith("/community") ? "w-full" : "w-0 group-hover:w-full"
-              }`}></span>
-            </Link>
-            <Link
-              href="/about"
-              className={`text-gray-700 hover:text-brand-600 transition-all duration-300 font-bold text-lg px-3 py-2 rounded-lg hover:bg-brand-50/50 relative group ${
-                pathname === "/about" ? "text-brand-600" : ""
-              }`}
-            >
-              회사 소개
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-brand-500 to-orange-500 transition-all duration-300 ${
-                pathname === "/about" ? "w-full" : "w-0 group-hover:w-full"
-              }`}></span>
-            </Link>
-            <Button
-              href="/cafe/seminar"
-              variant="primary"
-              size="sm"
-              className="ml-4 !bg-gradient-to-r !from-brand-400 !to-brand-500 !text-white !font-bold !rounded-full !px-5 !py-2.5 !text-base hover:!scale-105 hover:!shadow-lg transition-all duration-300"
-            >
-              알림 신청
-            </Button>
-          </div>
-        </nav>
+        </div>
+
+        {/* Right — CTA */}
+        <div className="flex items-center justify-end">
+          <a
+            href="#reserve"
+            className="group inline-flex items-center gap-1 rounded-full border border-ink/80 px-3 py-1.5 text-xs font-medium text-ink transition-colors hover:bg-ink hover:text-paper md:px-4 md:py-2 md:text-sm"
+          >
+            <span>대관 문의</span>
+            <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
+          </a>
+        </div>
       </div>
     </header>
   );
 }
-

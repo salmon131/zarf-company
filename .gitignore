@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local-only assets (naver-place preview, misc screenshots)
+/public/meeting-schedule.png
+/public/schedule-full.png

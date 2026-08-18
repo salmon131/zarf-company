@@ -2,19 +2,14 @@ export default function StructuredData() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "탱자프",
-    "alternateName": "zarf-company",
+    "name": "CafeTang",
+    "alternateName": "카페탱",
     "url": "https://tangzarf.com",
-    "description": "탱자프 대표의 투자 노하우와 최신 트렌드를 담은 재밌고 유익한 주식투자 만화와 영상",
+    "description": "편하게 쉬고, 작업하고, 공부할 수 있는 서울 강동구 카공 & 만화 카페 CafeTang.",
     "inLanguage": "ko-KR",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://tangzarf.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    },
     "publisher": {
       "@type": "Organization",
-      "name": "탱자프",
+      "name": "CafeTang",
       "logo": {
         "@type": "ImageObject",
         "url": "https://tangzarf.com/images/logo.png"
@@ -22,52 +17,36 @@ export default function StructuredData() {
     }
   };
 
-  const organizationData = {
+  const cafeData = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "탱자프",
-    "alternateName": "자프컴퍼니",
+    "@type": "CafeOrCoffeeShop",
+    "name": "CafeTang",
+    "alternateName": "카페탱",
     "url": "https://tangzarf.com",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://tangzarf.com/images/logo.png",
-      "width": 200,
-      "height": 200
-    },
-    "description": "데이터 기반 퀀트 분석으로 실전 투자 전략을 제공하는 투자 교육 플랫폼",
-    "foundingDate": "2025",
-    "founder": {
-      "@type": "Person",
-      "name": "김종환"
-    },
+    "image": "https://tangzarf.com/images/logo.png",
+    "description": "편하게 쉬고, 작업하고, 공부할 수 있는 카공 & 만화 카페",
+    "telephone": "0507-1304-7291",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "서울",
       "addressRegion": "강동구",
-      "streetAddress": "고덕로 97(암사동 447-24) 2층 카페탱"
+      "streetAddress": "고덕로 97(암사동 447-24) 2층 카페탱",
+      "addressCountry": "KR"
     },
-    "sameAs": [
-      "https://www.youtube.com/@tangzarf",
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "Customer Service",
-      "availableLanguage": ["Korean"]
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "09:00",
+      "closes": "22:00"
     }
-  };
-
-  // BreadcrumbList 구조화된 데이터
-  const breadcrumbData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "홈",
-        "item": "https://tangzarf.com"
-      }
-    ]
   };
 
   return (
@@ -78,13 +57,8 @@ export default function StructuredData() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(cafeData) }}
       />
     </>
   );
 }
-

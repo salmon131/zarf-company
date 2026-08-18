@@ -1,19 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  /* Gowun Batang: layout에서 link로 로드, 빌드 시 fetch 없음 */
+  --background: #FFF8F0;
+  --foreground: #2A1810;
+
+  /* Typography stacks */
+  --font-display: "Fraunces", "Gowun Batang", "Noto Serif KR", serif;
+  --font-serif: "Instrument Serif", "Fraunces", "Gowun Batang", serif;
+  --font-body: "Instrument Sans", "Noto Sans KR", "Gowun Batang", system-ui, sans-serif;
   --font-gowun-batang: "Gowun Batang", serif;
+
+  /* Paper & ink tones */
+  --paper: #FFF8F0;
+  --paper-deep: #F5EBD8;
+  --paper-dark: #E8DCC0;
+  --ink: #2A1810;
+  --ink-soft: #5C4433;
+  --ink-mute: #8B6F5A;
+  --seal: #C1440E;
+  --stamp: #7A2E0E;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-gowun-batang), "Gowun Batang", serif;
-  --font-display: var(--font-gowun-batang), "Gowun Batang", serif;
-  
-  /* 브랜드 노란색 컬러 팔레트 */
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+  --font-body: var(--font-body);
+  --font-gowun-batang: var(--font-gowun-batang);
+
+  /* Paper tokens */
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-paper-dark: var(--paper-dark);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-mute: var(--ink-mute);
+  --color-seal: var(--seal);
+  --color-stamp: var(--stamp);
+
+  /* 브랜드 팔레트 (기존 톤 유지) */
   --color-brand-50: #fffbf2;
   --color-brand-100: #fff6e4;
   --color-brand-200: #ffe8b8;
@@ -26,115 +53,172 @@
   --color-brand-900: #4d2b0b;
 }
 
+html {
+  background: var(--paper);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-gowun-batang), "Gowun Batang", serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "ss02", "cv11";
+  text-rendering: optimizeLegibility;
 }
 
-.gowun-batang-regular {
-  font-family: "Gowun Batang", serif;
-  font-weight: 400;
-  font-style: normal;
+::selection {
+  background: var(--brand-300, #ffd98b);
+  color: var(--ink);
 }
 
+/* -------- Typography utilities -------- */
 .font-display {
   font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  letter-spacing: -0.02em;
+}
+.font-serif {
+  font-family: var(--font-serif);
+}
+.font-body {
+  font-family: var(--font-body);
+}
+.font-hangul {
+  font-family: "Noto Sans KR", "Gowun Batang", sans-serif;
+}
+.font-hangul-serif {
+  font-family: "Gowun Batang", "Noto Serif KR", serif;
 }
 
-/* MZ 스타일 애니메이션 */
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
+.eyebrow {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.6875rem;
+  font-weight: 500;
 }
 
-.animate-blob {
-  animation: blob 7s infinite;
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "ss01";
 }
 
-.animation-delay-2000 {
-  animation-delay: 2s;
+/* -------- Paper texture (grain overlay) -------- */
+.paper-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.22  0 0 0 0 0.12  0 0 0 0.28 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  z-index: 1;
+}
+.paper-grain > * {
+  position: relative;
+  z-index: 2;
 }
 
-.animation-delay-4000 {
-  animation-delay: 4s;
+.grain-soft {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.25  0 0 0 0 0.12  0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
 }
 
-/* 브랜드 카피라이트 글로우 애니메이션 */
-@keyframes glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 5px rgba(255, 187, 51, 0.5)) drop-shadow(0 0 10px rgba(255, 187, 51, 0.3)) drop-shadow(0 0 15px rgba(255, 187, 51, 0.2));
-  }
-  50% {
-    filter: drop-shadow(0 0 10px rgba(255, 187, 51, 0.8)) drop-shadow(0 0 20px rgba(255, 187, 51, 0.6)) drop-shadow(0 0 30px rgba(255, 187, 51, 0.4)) drop-shadow(0 0 40px rgba(230, 126, 34, 0.3));
-  }
+/* -------- Dotted rule / dashed rule (ticket look) -------- */
+.rule-dashed {
+  background-image: linear-gradient(to right, currentColor 50%, transparent 50%);
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+  height: 1px;
+}
+.rule-dotted-v {
+  background-image: linear-gradient(to bottom, currentColor 40%, transparent 40%);
+  background-size: 1px 6px;
+  background-repeat: repeat-y;
+  width: 1px;
 }
 
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
+/* -------- Ticket edge (perforated) -------- */
+.ticket-notch {
+  --n: 12px;
+  mask-image:
+    radial-gradient(circle at 0 50%, transparent var(--n), #000 calc(var(--n) + 0.5px)),
+    radial-gradient(circle at 100% 50%, transparent var(--n), #000 calc(var(--n) + 0.5px));
+  -webkit-mask-image:
+    radial-gradient(circle at 0 50%, transparent var(--n), #000 calc(var(--n) + 0.5px)),
+    radial-gradient(circle at 100% 50%, transparent var(--n), #000 calc(var(--n) + 0.5px));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
-/* 반짝거리는 글로우 효과 */
+/* -------- Circular seal (rotating stamp) -------- */
+@keyframes seal-rotate {
+  to { transform: rotate(360deg); }
+}
+.seal-rotate {
+  animation: seal-rotate 24s linear infinite;
+}
+
+/* -------- Slow marquee -------- */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-x 40s linear infinite;
+}
+
+/* -------- Underline swipe -------- */
+.link-swipe {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+.link-swipe:hover {
+  background-size: 100% 1px;
+}
+
+/* -------- Vintage steam animation (hero mug) -------- */
+@keyframes steam-rise {
+  0%   { transform: translateY(0) scaleX(1); opacity: 0; }
+  25%  { opacity: 0.55; }
+  100% { transform: translateY(-38px) scaleX(1.4); opacity: 0; }
+}
+.steam {
+  animation: steam-rise 3.4s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* -------- Legacy animations kept for compatibility -------- */
 @keyframes shimmer-glow {
-  0%, 100% {
-    text-shadow: 
-      0 0 3px rgba(230, 165, 46, 0.3),
-      0 0 6px rgba(230, 165, 46, 0.2);
-  }
-  50% {
-    text-shadow: 
-      0 0 6px rgba(230, 165, 46, 0.5),
-      0 0 12px rgba(230, 165, 46, 0.3),
-      0 0 18px rgba(255, 187, 51, 0.2);
-  }
+  0%, 100% { text-shadow: 0 0 3px rgba(230, 165, 46, 0.3), 0 0 6px rgba(230, 165, 46, 0.2); }
+  50%      { text-shadow: 0 0 6px rgba(230, 165, 46, 0.5), 0 0 12px rgba(230, 165, 46, 0.3); }
 }
+.animate-shimmer-glow { animation: shimmer-glow 3s ease-in-out infinite; }
 
-.animate-shimmer-glow {
-  animation: shimmer-glow 3s ease-in-out infinite;
-}
-
-/* 숫자 증가 시 크기 변화 애니메이션 */
-@keyframes scale-bounce {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.animate-scale-bounce {
-  animation: scale-bounce 2s ease-in-out;
-}
-
-/* 골드 가격 텍스트 - 우측에서 등장 + 은은한 글로우 */
 @keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(1rem); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.animate-fade-in-right { animation: fadeInRight 0.6s ease-out both; }
+
+/* -------- Hide horizontal scrollbar for carousels -------- */
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+.scroll-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.animate-fade-in-right {
-  animation: fadeInRight 0.6s ease-out both;
+/* -------- Focus ring -------- */
+:focus-visible {
+  outline: 2px solid var(--brand-500, #ffbb33);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
